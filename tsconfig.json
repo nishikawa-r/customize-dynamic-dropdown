@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        "sourceMap": true,
+        "target": "ESNext",
+        "module": "ESNext",
+        "lib": [
+            "esnext",
+            "dom"
+        ],
+        "outDir": "dist",
+        "strictPropertyInitialization": false,
+        "allowJs": true,
+        "esModuleInterop": true,
+        "moduleResolution": "node",
+        "allowSyntheticDefaultImports": true,
+        "resolveJsonModule": true,
+        "jsx": "react",
+        "strict": true,
+        "paths": {
+            "@common/*": [
+                "./src/common/*"
+            ],
+            "@type/*": [
+                "./src/types/*"
+            ],
+            "@kintone/*": [
+                "./node_modules/@kintone/*"
+            ]
+        }
+    },
+    "typeRoots": [
+        "src/types",
+        "node_modules/@types"
+    ],
+    "files": [
+        "./node_modules/@kintone/dts-gen/kintone.d.ts"
+    ],
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": [
+        "dist",
+        "node_modules"
+    ]
+}
