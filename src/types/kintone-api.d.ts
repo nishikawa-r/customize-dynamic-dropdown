@@ -7,7 +7,7 @@ import { OneOf as DefaultFieldProperty } from '@kintone/rest-api-client/lib/Kint
 import {
     OneOf as DefaultField,
     Creator as DefaultCreator,
-    UserSelect as DefaultUserSelect,
+    UserSelect as DefaultUserSelect
 } from '@kintone/rest-api-client/lib/KintoneFields/types/field';
 import {
     OneOf as DefaultLayoutField,
@@ -22,7 +22,6 @@ declare namespace api {
 
     type FieldProperties = Record<string, FieldProperty>;
     type FieldEntry = [string, FieldProperty];
-
     type RecordData = DefaultRecord;
 
     type Layout = DefaultLayout;
@@ -46,8 +45,8 @@ declare namespace api {
             app: number,                         // アプリID
             fields: Array<string>,              // フィールド
             condition: string,                  // 条件
-            orderBy: string,                    // 順番
-            withCursor: boolean              // カーソル有無
+            orderBy?: string,                    // 順番
+            withCursor?: boolean              // カーソル有無
         }
     }
 }
