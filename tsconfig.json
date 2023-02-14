@@ -26,6 +26,9 @@
             ],
             "@kintone/*": [
                 "./node_modules/@kintone/*"
+            ],
+            "@static/*": [
+                "./src/static/*"
             ]
         }
     },

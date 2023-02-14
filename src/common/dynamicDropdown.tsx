@@ -1,16 +1,21 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintoneApi } from "@common/kintone-api";
 import { kintone } from "@type/kintone";
-import React from 'react';
+import { kucTable } from "@static/static";
 class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
+    public forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition;
     public CodeArr: ({ [key: string]: dyDropDwn.DropdownItem[] });
     public columns: dyDropDwn.column[];
+    public initialData: ({ [key: string]: dyDropDwn.defaultData })[];
+    public defaultRowData: ({ [key: string]: dyDropDwn.defaultData });
+    public initialObj: ({ [key: string]: dyDropDwn.defaultData });
     constructor() {
         const kucTable: dyDropDwn.kucTable = {}
         this.CodeArr = {};
         this.columns = [];
+        this.initialData = [];
         this.RespValue = {
             AllCodeResponceValue: {},
             CodeArr: [],
@@ -127,7 +132,7 @@ class dynamicDropdown {
         this.Settings.Code = e[forDynamicValueAcquisition.childObj[child].parent].value;
         this.Settings.BranchCode = e[child].value;
     };
-    public async intialCodeSelect(e: kintone.record, property: string, forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition) {
+    public async intialCodeSelect(e: kintone.record, property: string, forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition): Promise<dyDropDwn.Dropdown> {
         return new Promise((resolve, reject) => {
             this.RespValue.BranchNoArr = [{ label: "-----", value: "-----" }];
             let result: ({ [key: string]: dyDropDwn.Dropdown }) = {};
@@ -163,22 +168,32 @@ class dynamicDropdown {
         });
     };
     public init() {
-        Object.keys(this.Settings.kucTable).map((property) => {
-            // let columnObj: dyDropDwn.column = {
-            //     header: "", cell: ({ rowIndex, onCellChange }) => {
-            //         return (<></>)
-            //     }
-            // };
-            let defaultRowData: ({ [key: string]: dyDropDwn.defaultData }) = {};
-            let initialObj: ({ [key: string]: dyDropDwn.defaultData }) = {};
-            if (this.Settings.kucTable[property].type == "dropdown") {
-                defaultRowData[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }
-                initialObj[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }
-            }
-            else {
-                defaultRowData[property] = { value: this.Settings.kucTable[property].defaultRowData as string }
-                initialObj[property] = { value: this.Settings.kucTable[property].defaultRowData as string }
-            }
+        return new Promise(async (resolve, reject) => {
+            this.Settings.kucTable = kucTable;
+            this.forDynamicValueAcquisition = this.ForDynamicValueAcquisition();
+            const doAppList = this.appList();
+            await this.OptionalAppRecordAcquisition(doAppList);
+            this.setCodeArr(this.forDynamicValueAcquisition);
+            this.setParentDeafultValue(this.forDynamicValueAcquisition);
+            this.defaultRowData = {};
+            this.initialObj = {};
+            Object.keys(this.Settings.kucTable).map((property) => {
+                // let columnObj: dyDropDwn.column = {
+                //     header: "", cell: ({ rowIndex, onCellChange }) => {
+                //         return (<></>)
+                //     }
+                // };
+                if (this.Settings.kucTable[property].type == "dropdown") {
+                    this.defaultRowData[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }
+                    this.initialObj[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }
+                }
+                else {
+                    this.defaultRowData[property] = { value: this.Settings.kucTable[property].defaultRowData as string }
+                    this.initialObj[property] = { value: this.Settings.kucTable[property].defaultRowData as string }
+                }
+            });
+            this.initialData.push(this.initialObj);
+            resolve("ok");
         });
     }
 }

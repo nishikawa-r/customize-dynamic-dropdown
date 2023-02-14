@@ -16,6 +16,7 @@
     "@cybozu/eslint-config": "^18.0.0",
     "@kintone/dts-gen": "^6.1.19",
     "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.10",
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "babel-loader": "^9.1.2",
     "eslint": "^8.33.0",
@@ -31,6 +32,7 @@
     "@babel/polyfill": "^7.12.1",
     "@kintone/kintone-ui-component": "^0.9.3",
     "@kintone/rest-api-client": "^3.3.1",
+    "install": "^0.13.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

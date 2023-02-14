@@ -23,8 +23,8 @@ export declare module dyDropDwn {
         cell: (cellProps: CellRendererProps) => JSX.Element;
     };
     type Dropdown = {
-        items: DropdownItem[];
-        value: string;
+        items?: DropdownItem[];
+        value?: string;
     };
     type defaultData = {
         items?: DropdownItem[];
