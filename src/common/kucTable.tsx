@@ -3,9 +3,9 @@ import { Dropdown, Text, Table } from '@kintone/kintone-ui-component';
 
 const KucTable = (Props: any) => {
     const props = Props || '';
-    const columns = [{
+    const columns: any = [{
         header: 'minorChoice',
-        cell: ({ rowIndex, onCellChange }) =>
+        cell: ({ rowIndex, onCellChange }: any) =>
             <Text
                 value={props.value[rowIndex].value || ''}
                 onChange={newValue => onCellChange(newValue, props, rowIndex, 'minorChoice')}
