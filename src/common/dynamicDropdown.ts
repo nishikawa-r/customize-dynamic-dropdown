@@ -1,12 +1,14 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
-import { Table as kucTable } from "kintone-ui-component"
-import { KintoneRestAPIClient, KintoneRecordField } from '@kintone/rest-api-client';
-import { Subtable, InSubtable } from "@kintone/rest-api-client/lib/KintoneFields/types/field";
+import { kintoneApi } from "@common/kintone-api";
+import { kintone } from "@type/kintone";
 
 class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
+    public CodeArr: ({ [key: string]: dyDropDwn.DropdownItem[] });
     constructor() {
+        const kucTable: dyDropDwn.kucTable = {}
+        this.CodeArr = {};
         this.RespValue = {
             AllCodeResponceValue: {},
             CodeArr: [],
@@ -22,7 +24,7 @@ class dynamicDropdown {
             },
             Code: null,
             BranchCode: null,
-            kucTable: new kucTable(),
+            kucTable: kucTable,
             propertyArr: []
         }
     }
@@ -53,19 +55,110 @@ class dynamicDropdown {
             this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr];
         }
         else {
-            this.RespValue.BranchNoList = TableValue?.map((ele) => {
-                let test: dyDropDwn.SubtableRow = <dyDropDwn.SubtableRow>ele[childObj.parentOptionTable].value;
-                test.value.forEach((ele) => {
-                    let subTitle = (childObj.subTitle != "") ? `(${ele.value[childObj.subTitle].value})` : "";
-                    return {
-                        "label": `${ele.value[childObj.parentOptionCode].value}` + subTitle, "value": `${ele.value[childObj.parentOptionCode].value}`
-                    }
+            this.RespValue.BranchNoList = TableValue?.map((ele, index) => {
+                if (index == 0) {
+                    let test: dyDropDwn.SubtableRow[] = <dyDropDwn.SubtableRow[]>ele[childObj.parentOptionTable].value;
+                    return test.map((ele) => {
+                        let subTitle = (childObj.subTitle != "") ? `(${ele.value[childObj.subTitle].value})` : "";
+                        return {
+                            label: `${ele.value[childObj.parentOptionCode].value}` + subTitle, value: `${ele.value[childObj.parentOptionCode].value}`
+                        }
+                    });
                 }
-            }
             });
-        this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...this.RespValue.BranchNoList];
-    }
+            const BranchNoList = this.RespValue.BranchNoList.flat();
+            this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...BranchNoList];
+        }
         return this.RespValue.BranchNoArr;
     }
+    public appList(): Array<number> {
+        let appListArr = Object.keys(this.Settings.kucTable).map((column) => {
+            let array = [this.Settings.kucTable[column].app];
+            return array
+        });
+        return appListArr.flat().filter(e => e).filter((e, i, self) => { return self.indexOf(e) == i })
+    };
+    public ForDynamicValueAcquisition(): dyDropDwn.forDynamicValueAcquisition {
+        let child: dyDropDwn.kucTable = {};
+        let parent = Object.keys(this.Settings.kucTable).map((property) => {
+            if (this.Settings.kucTable[property].parent != "") {
+                return child[property] = this.Settings.kucTable[property];
+            }
+            return;
+        }).filter(e => e)[0];
+        return { "childObj": child };
+    }
+    public setCodeArr(forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition) {
+        this.CodeArr = {};
+        Object.keys(forDynamicValueAcquisition.childObj).forEach(async (child) => {
+            return this.CodeArr[forDynamicValueAcquisition.childObj[child].parent] = this.CodeOptionsList(this.Settings.kucTable[forDynamicValueAcquisition.childObj[child].parent]);
+        });
+        return;
+    };
+    public async OptionalAppRecordAcquisition(doAppList: Array<number>) {
+        await Promise.all(doAppList.map(async (app) => {
+            let fieldsList;
+            const dofieldsList = () => {
+                let fieldListArr = Object.keys(this.Settings.kucTable).map((column) => {
+                    let array = (app == this.Settings.kucTable[column].app) ? [this.Settings.kucTable[column].parentOptionCode, this.Settings.kucTable[column].parentOptionTable, this.Settings.kucTable[column].lookUpTable] : [];
+                    return array
+                });
+                fieldsList = fieldListArr.flat().filter(e => e).filter((e, i, self) => { return self.indexOf(e) == i })
+            };
+            dofieldsList();
+            this.Settings.requestAllCodeBody.app = app;
+            this.Settings.requestAllCodeBody.fields = fieldsList;
+            const api = new kintoneApi();
+            const view = await api.GetTestingItems(this.Settings.requestAllCodeBody);
+            this.RespValue.AllCodeResponceValue[app] = view;
+            console.log(view)
+        }))
+    };
+    public setParentDeafultValue(forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition) {
+        Object.keys(forDynamicValueAcquisition.childObj).forEach(async (child) => {
+            this.Settings.kucTable[forDynamicValueAcquisition.childObj[child].parent].defaultRowData = this.CodeArr[forDynamicValueAcquisition.childObj[child].parent];
+            console.log(this.Settings.kucTable[forDynamicValueAcquisition.childObj[child].parent].defaultRowData);
+        });
+        return;
+    }
+    public intialSetOptionssubTitle(e: kintone.record, child: string, forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition) {
+        this.Settings.Code = e[forDynamicValueAcquisition.childObj[child].parent].value;
+        this.Settings.BranchCode = e[child].value;
+    };
+    public async intialCodeSelect(e: kintone.record, property: string, forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition) {
+        return new Promise((resolve, reject) => {
+            this.RespValue.BranchNoArr = [{ label: "-----", value: "-----" }];
+            let result: ({ [key: string]: dyDropDwn.Dropdown }) = {};
+            let resultObj: ({ [key: string]: dyDropDwn.DropdownItem[] }) = {};
+            let childName = "";
+            let select = Object.keys(forDynamicValueAcquisition.childObj).forEach(async (child) => {
+                if (e[forDynamicValueAcquisition.childObj[child].parent] && e[forDynamicValueAcquisition.childObj[child].parent].value != "-----" && e[forDynamicValueAcquisition.childObj[child].parent].value != "") {
+                    if (property == child) {
+                        this.intialSetOptionssubTitle(e, child, forDynamicValueAcquisition);
+                        resultObj[property] = this.BranchNoOptionsList(this.Settings.kucTable[forDynamicValueAcquisition.childObj[child].parent], this.Settings.kucTable[child], property);
+                        console.log(typeof e[property] != "undefined");
+                        let arr;
+                        if (this.Settings.kucTable[property].subTitle != "" || typeof e[property] != "undefined") {
+                            console.log(resultObj[property]);
+                            arr = resultObj[property].filter((ele) => ele.value == e[property].value);
+                            console.log(arr);
+                            arr = (arr.length > 0) ? arr[0].value : "-----";
+                        }
+                        result[child] = {
+                            items: resultObj[property],
+                            value: ((typeof e[property] != "undefined") && (arr != "-----")) ? e[property].value : "-----"
+                        };
+                        console.log(result[child]);
+                        childName = child;
+                    }
+                }
+            });
+            console.log(result);
+            resolve(result[childName] || {
+                items: [{ label: "-----", value: "-----" }],
+                value: (typeof e[property] != "undefined") ? e[property].value : "-----"
+            });
+        });
+    };
 }
 export default dynamicDropdown;

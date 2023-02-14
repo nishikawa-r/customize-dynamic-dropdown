@@ -1,13 +1,12 @@
 import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { api } from '@type/kintone-api';
 
-class kintoneApi {
+export class kintoneApi {
     public client: KintoneRestAPIClient;
     constructor() {
         this.client = new KintoneRestAPIClient();
     }
-    public async getAllRecords(params: api.param.get): Promise<api.RecordData[]> {
-        return await this.client.record.getAllRecords(params);
+    public async GetTestingItems(params: api.param.get): Promise<api.get<api.RecordData[]>> {
+        return await this.client.record.getAllRecords(params).then((resp) => resp).catch((err) => err);
     }
 }
-export default kintoneApi

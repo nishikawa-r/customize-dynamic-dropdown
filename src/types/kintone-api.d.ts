@@ -23,7 +23,9 @@ declare namespace api {
     type FieldProperties = Record<string, FieldProperty>;
     type FieldEntry = [string, FieldProperty];
     type RecordData = DefaultRecord;
-
+    type get<T> = {
+        records: T
+    }
     type Layout = DefaultLayout;
     type LayoutField = DefaultLayoutField;
 
