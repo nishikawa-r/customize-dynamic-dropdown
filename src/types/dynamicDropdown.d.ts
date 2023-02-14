@@ -1,23 +1,42 @@
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
 import { InSubtable } from '@kintone/rest-api-client/lib/KintoneFields/types/field';
 import { api } from "@type/kintone-api"
+import { TableColumn, CellRendererProps } from "@kintone/kintone-ui-component"
+import React from 'react';
 export declare module dyDropDwn {
     type DropdownItem = {
         value: string;
         label?: string;
         isDisabled?: boolean;
     };
+    type TextProps = {
+        value?: string;
+        isDisabled?: boolean;
+        isVisible?: boolean;
+        placeholder?: string;
+        onChange?: (value: string | null) => void;
+        onClick?: (e: React.SyntheticEvent<EventTarget>) => void;
+    };
+    type column = {
+        header: string;
+        tdProps?: (cellProps: CellRendererProps) => Record<string, any>;
+        cell: (cellProps: CellRendererProps) => JSX.Element;
+    };
     type Dropdown = {
         items: DropdownItem[];
         value: string;
     };
+    type defaultData = {
+        items?: DropdownItem[];
+        value: string;
+    }
     type kucTable = {
         [key: string]: kucTableItems
     }
     type kucTableItems = {
         type: string,
         columnLabel: string,
-        defaultRowData: DropdownItem[] | null,
+        defaultRowData: DropdownItem[] | null | string,
         isLookUp: boolean,
         lookUpField: string | null,
         lookUpTable: string | null,
@@ -42,7 +61,7 @@ export declare module dyDropDwn {
     type defaultObj = {
         type: string,
         columnLabel: string,
-        defaultRowData: DropdownItem[],
+        defaultRowData: DropdownItem[] | string,
         isLookUp: boolean,
         lookUpField: string | null,
         lookUpTable: string,
