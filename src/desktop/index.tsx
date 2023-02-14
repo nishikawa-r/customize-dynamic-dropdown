@@ -1,16 +1,15 @@
 import React from 'react';
 import { render } from 'react-dom';
-import KucTable from "@common/KucTable";
-import dynamicDropDown from "@common/dynamicDropDown";
+import { KucTable } from "../common/kucTable";
+import { dynamicDropdown as dynamicDropDown } from "../common/dynamicDropdown";
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone } from "@type/kintone";
-import { events, tableCode, tableLabel } from "@static/static"
+import { events, tableCode, tableLabel } from "../static/static"
 
 kintone.events.on(events, async (event: kintone.Event) => {
     let SubTableLookUp = new dynamicDropDown();
     let DynamicDropDown = await SubTableLookUp.init();
     let SettingKuc = SubTableLookUp.Settings.kucTable;
-    let kucTable;
     let promise = new Promise((resolve, reject) => {
         let initialObj: ({ [key: string]: dyDropDwn.Dropdown }) = {};
         let resultArr: ({ [key: string]: dyDropDwn.Dropdown }[]) = [];
@@ -18,7 +17,7 @@ kintone.events.on(events, async (event: kintone.Event) => {
             let initialObj: any = {}
             Object.keys(SubTableLookUp.Settings.kucTable).forEach(async (property) => {
                 if (SettingKuc[property].type == "dropdown") {
-                    if (SettingKuc[property].parent != "" && recordTableRow.value[SettingKuc[property].parent] && recordTableRow.value[SettingKuc[property].parent].value != "") {
+                    if (SettingKuc[property].parent != "" && recordTableRow.value[SettingKuc[property].parent as string] && recordTableRow.value[SettingKuc[property].parent as string].value != "") {
                         let DoIntialCodeSelect = () => {
                             return new Promise((resolve, reject) => {
                                 let IntialCodeSelect: Promise<dyDropDwn.Dropdown> = SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);

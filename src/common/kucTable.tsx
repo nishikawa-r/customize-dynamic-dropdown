@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dropdown, Text, Table } from '@kintone/kintone-ui-component';
 
-const KucTable = (Props: any) => {
+export const KucTable = (Props: any) => {
     const props = Props || '';
     const columns: any = [{
         header: 'minorChoice',
@@ -18,5 +18,4 @@ const KucTable = (Props: any) => {
             defaultRowData={{}}
         />
     )
-};
-export default KucTable;
+}
