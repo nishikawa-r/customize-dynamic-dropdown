@@ -1,6 +1,7 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintoneApi } from "@common/kintone-api";
 import { kintone } from "@type/kintone";
+import { api as Api } from "@type/kintone-api";
 import { kucTable } from "@common/static";
 export class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
@@ -29,7 +30,7 @@ export class dynamicDropdown {
         this.Settings = {
             requestAllCodeBody: {
                 app: 0,
-                condition: "order by レコード番号 asc",
+                query: "order by レコード番号 asc",
                 fields: []
             },
             Code: null,
@@ -110,7 +111,7 @@ export class dynamicDropdown {
             let fieldsList = [""];
             const dofieldsList = () => {
                 let fieldListArr = Object.keys(this.Settings.kucTable).map((column) => {
-                    let array = (app == this.Settings.kucTable[column].app) ? [this.Settings.kucTable[column].parentOptionCode, this.Settings.kucTable[column].parentOptionTable, this.Settings.kucTable[column].lookUpTable] : [];
+                    let array = (app == this.Settings.kucTable[column].app) ? [this.Settings.kucTable[column].parentOptionCode, this.Settings.kucTable[column].parentOptionTable, this.Settings.kucTable[column].lookUpTable, this.Settings.kucTable[column].subTitle] : [];
                     return array
                 });
                 fieldsList = fieldListArr.flat().filter(e => e).filter((e, i, self) => { return self.indexOf(e) == i }) as string[]
@@ -120,7 +121,8 @@ export class dynamicDropdown {
             this.Settings.requestAllCodeBody.fields = fieldsList;
             const api = new kintoneApi();
             const view = await api.GetTestingItems(this.Settings.requestAllCodeBody);
-            this.RespValue.AllCodeResponceValue[app] = view;
+            this.RespValue.AllCodeResponceValue[app] = { records: [] };
+            this.RespValue.AllCodeResponceValue[app].records = view;
             console.log(view)
         }))
     };

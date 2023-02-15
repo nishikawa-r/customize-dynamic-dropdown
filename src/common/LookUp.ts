@@ -15,7 +15,7 @@ export class LookUp {
         this.Settings = {
             requestAllCodeBody: {
                 app: 0,
-                condition: "order by レコード番号 asc",
+                query: "order by レコード番号 asc",
                 fields: []
             },
             Code: null,

@@ -19,9 +19,9 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                 if (SettingKuc[property].type == "dropdown") {
                     if (SettingKuc[property].parent != "" && recordTableRow.value[SettingKuc[property].parent as string] && recordTableRow.value[SettingKuc[property].parent as string].value != "") {
                         let DoIntialCodeSelect = () => {
-                            return new Promise((resolve, reject) => {
-                                let IntialCodeSelect: Promise<dyDropDwn.Dropdown> = SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);
-                                initialObj[property].value = IntialCodeSelect;
+                            return new Promise(async (resolve, reject) => {
+                                initialObj[property] = { value: [] };
+                                initialObj[property].value = await SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);
                                 resolve(initialObj[property]);
                             });
                         }

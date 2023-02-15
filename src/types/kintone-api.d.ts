@@ -23,9 +23,8 @@ declare namespace api {
     type FieldProperties = Record<string, FieldProperty>;
     type FieldEntry = [string, FieldProperty];
     type RecordData = DefaultRecord;
-    type get<T> = {
-        records: T
-    }
+    type get<T> = T;
+
     type Layout = DefaultLayout;
     type LayoutField = DefaultLayoutField;
 
@@ -46,7 +45,7 @@ declare namespace api {
         type get = {
             app: number,                         // アプリID
             fields: Array<string>,              // フィールド
-            condition: string,                  // 条件
+            query: string,                  // 条件
             orderBy?: string,                    // 順番
             withCursor?: boolean              // カーソル有無
         }
