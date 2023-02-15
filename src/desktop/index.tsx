@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
-import { KucTable } from "@common/kucTable";
+import KucTable from "@common/kucTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone as kintoneType } from "@type/kintone";
 import { events, tableCode, tableLabel } from "@common/static"
