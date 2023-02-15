@@ -26,7 +26,7 @@ module.exports = {
     resolve: {
         // モジュールとして扱いたいファイルの拡張子を省略する。
         // import { hoge } from 'Hoge'; とあった場合、Hoge.tsを読み込む。なければHoge.jsを読み込む。
-        extensions: ['.ts', 'tsx', 'js'],
+        extensions: ['.tsx', '.ts', '.js', '.css'],
     },
 
     // モジュールに適用するルールの設定
