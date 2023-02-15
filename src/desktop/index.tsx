@@ -1,5 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
 import { KucTable } from "@common/kucTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
@@ -52,12 +53,14 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
         return new Promise(function (resolve, reject) {
             console.log({ result });
             const data = (event.record[tableCode].value[0].id != null) ? result : SubTableLookUp.initialData;
-            render(<KucTable
-                data={data}
-                defaultRowData={SubTableLookUp.defaultRowData}
-                columns={SubTableLookUp.columns}
-            />,
-                kintone.app.getHeaderSpaceElement()
+            const root = createRoot(
+                document.getElementById('root') as HTMLElement
+            );
+            root.render(
+                <KucTable
+                    data={data}
+                    defaultRowData={SubTableLookUp.defaultRowData}
+                />
             );
             resolve("")
         });

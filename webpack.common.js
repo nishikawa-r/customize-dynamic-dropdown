@@ -10,6 +10,7 @@ module.exports = {
     static: './src/common/static.ts',
     kucTable: './src/common/kucTable.tsx',
     index: './src/desktop/index.tsx',
+    test: './src/desktop/test.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', 'json'],
