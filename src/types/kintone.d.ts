@@ -1,4 +1,4 @@
-export declare namespace kintone {
+export declare module kintone {
     /**
      * events.onに指定するイベント名の型を補完したもの☁️
      *

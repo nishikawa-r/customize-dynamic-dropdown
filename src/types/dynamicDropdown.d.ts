@@ -78,14 +78,17 @@ export declare module dyDropDwn {
         Code: string | null,
         BranchCode: string | null,
         kucTable: kucTable,
-        propertyArr: Array<String>
+        propertyArr: Array<string>
+    }
+    type LookUp = {
+        [fieldCode: string]: string
     }
     type RespValue = {
         AllCodeResponceValue: { [key: string]: DefaultResp },
         CodeArr: DropdownItem[],
         BranchNoList: DropdownItem[][],
         BranchNoArr: DropdownItem[],
-        LookUpValue: string | null
+        LookUpValue: LookUp | null
     }
     type forDynamicValueAcquisition = {
         childObj: kucTable

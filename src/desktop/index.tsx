@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { KucTable } from "../common/kucTable";
-import { dynamicDropdown as dynamicDropDown } from "../common/dynamicDropdown";
+import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
+import { KucTable } from "@common/kucTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
-import { kintone } from "@type/kintone";
-import { events, tableCode, tableLabel } from "../static/static"
+import { kintone as kintoneType } from "@type/kintone";
+import { events, tableCode, tableLabel } from "@common/static"
 
-kintone.events.on(events, async (event: kintone.Event) => {
+kintone.events.on(events, async (event: kintoneType.Event) => {
     let SubTableLookUp = new dynamicDropDown();
     let DynamicDropDown = await SubTableLookUp.init();
     let SettingKuc = SubTableLookUp.Settings.kucTable;

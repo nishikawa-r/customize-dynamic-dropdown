@@ -1,7 +1,7 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
-import { kintoneApi } from "./kintone-api";
+import { kintoneApi } from "@common/kintone-api";
 import { kintone } from "@type/kintone";
-import { kucTable } from "../static/static";
+import { kucTable } from "@common/static";
 export class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;

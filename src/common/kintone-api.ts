@@ -1,4 +1,4 @@
-import { KintoneRestAPIClient } from '../../node_modules/@kintone/rest-api-client';
+import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { api } from '@type/kintone-api';
 
 export class kintoneApi {
