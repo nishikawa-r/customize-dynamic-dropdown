@@ -1,4 +1,5 @@
 import { dyDropDwn } from "@type/dynamicDropdown"
+import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
 export module kucTable {
     type props = {
         data: {
@@ -7,6 +8,7 @@ export module kucTable {
         defaultRowData: {
             [key: string]: dyDropDwn.defaultData;
         },
+        dynamicDropdown?: dynamicDropDown;
 
     }
 }

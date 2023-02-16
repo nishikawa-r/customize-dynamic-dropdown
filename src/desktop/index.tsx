@@ -60,6 +60,7 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                 <KucTable
                     data={data}
                     defaultRowData={SubTableLookUp.defaultRowData}
+                    dynamicDropdown={SubTableLookUp as dynamicDropDown}
                 />
             );
             resolve("")

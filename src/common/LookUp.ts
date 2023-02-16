@@ -38,42 +38,42 @@ export class LookUp {
         console.log(LookUpObj);
         return LookUpObj;
     }
-    // public SettingLookUpObj(e) {
-    //     let Kuc = this.Settings.kucTable;
-    //     let LookUpObj = {};
-    //     this.Settings.propertyArr = Object.keys(Kuc).filter((property) => {
-    //         return Kuc[property].isLookUp == true && Kuc[property].doLookUpchange == e.fieldName
-    //     });
-    //     this.Settings.propertyArr.forEach((property) => {
-    //         LookUpObj[property] = Kuc[property];
-    //     });
-    //     console.log(LookUpObj);
-    //     return LookUpObj;
-    // }
-    // public GetLookUpValue(lookUpObj: dyDropDwn.kucTableItems, e) {
-    //     let self = this;
-    //     // this.RespValue.LookUpValue = null;
-    //     let SettingLookUpObj = this.SettingLookUpObj(e);
-    //     console.log(this.Settings.Code);
-    //     Object.keys(SettingLookUpObj).forEach((property) => {
-    //         let TableValue = this.RespValue.AllCodeResponceValue[lookUpObj.app as number].records.filter((ele) => ele[lookUpObj.parentOptionCode as string].value == this.Settings.Code);
-    //         if (this.Settings.kucTable[property].lookUpTable != "") {
-    //             this.RespValue.LookUpValue = TableValue?.map((ele, index) => {
-    //                 if (index == 0) {
-    //                     let test: dyDropDwn.SubtableRow[] = (ele[this.Settings.kucTable[property].lookUpTable as string].value as dyDropDwn.SubtableRow[]);
-    //                     return test.map((ele) => {
-    //                         if (ele.value[this.Settings.kucTable[property].lookUpkey as string].value == this.Settings.BranchCode) {
-    //                             return this.CreateLookUpObj(ele.value);
-    //                         }
-    //                         return;
-    //                     }).filter(e => e)[0];
-    //                 }
-    //             }).flat()[0] as dyDropDwn.LookUp;
-    //         }
-    //         else {
-    //             this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
-    //         }
-    //     });
-    //     console.log(this.RespValue.LookUpValue);
-    // }
+    public SettingLookUpObj({ e }: any) {
+        let Kuc = this.Settings.kucTable;
+        let LookUpObj: any = {};
+        this.Settings.propertyArr = Object.keys(Kuc).filter((property) => {
+            return Kuc[property].isLookUp == true && Kuc[property].doLookUpchange == e.fieldName
+        });
+        this.Settings.propertyArr.forEach((property) => {
+            LookUpObj[property] = Kuc[property];
+        });
+        console.log(LookUpObj);
+        return LookUpObj;
+    }
+    public GetLookUpValue({ lookUpObj, e }: any) {
+        let self = this;
+        // this.RespValue.LookUpValue = null;
+        let SettingLookUpObj = this.SettingLookUpObj(e);
+        console.log(this.Settings.Code);
+        Object.keys(SettingLookUpObj).forEach((property) => {
+            let TableValue = this.RespValue.AllCodeResponceValue[lookUpObj.app as number].records.filter((ele) => ele[lookUpObj.parentOptionCode as string].value == this.Settings.Code);
+            if (this.Settings.kucTable[property].lookUpTable != "") {
+                this.RespValue.LookUpValue = TableValue?.map((ele, index) => {
+                    if (index == 0) {
+                        let test: dyDropDwn.SubtableRow[] = (ele[this.Settings.kucTable[property].lookUpTable as string].value as dyDropDwn.SubtableRow[]);
+                        return test.map((ele) => {
+                            if (ele.value[this.Settings.kucTable[property].lookUpkey as string].value == this.Settings.BranchCode) {
+                                return this.CreateLookUpObj(ele.value);
+                            }
+                            return;
+                        }).filter(e => e)[0];
+                    }
+                }).flat()[0] as dyDropDwn.LookUp;
+            }
+            else {
+                this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
+            }
+        });
+        console.log(this.RespValue.LookUpValue);
+    }
 }
