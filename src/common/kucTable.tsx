@@ -18,39 +18,37 @@ export default class KucTable extends React.Component<kucTable.props> {
     constructor(props: kucTable.props) {
         super(props);
         this.state = {
-            value: props.data
+            value: props.data.length ? props.data : [{}],
         }
-        this.columns = [];
         this.data = props.data;
         this.defaultRowData = props.defaultRowData;
-        const KucTable = (Props: kucTable.props) => {
-            let saveData: Record<string, any>[] | undefined = [{}];
-            const props = Props || '';
-            Object.keys(props.defaultRowData).forEach((data) => {
-                let col = (props.data[0][data].items == undefined)
+    }
+    render() {
+        this.columns = [];
+        const KucTable = () => {
+            Object.keys(this.defaultRowData).forEach((data) => {
+                let col = (this.state.value[0][data].items == undefined)
                     ? {
                         header: data,
                         cell: ({ rowIndex, onCellChange }: any) =>
                             <Text
-                                value={props.data[rowIndex][data].value || ''}
-                                onChange={newValue => onCellChange(newValue, props, rowIndex, data)}
+                                value={(this.state.value[rowIndex] == undefined) ? "" : this.state.value[rowIndex][data].value}
+                                onChange={newValue => onCellChange(newValue, this.state.value, rowIndex, data)}
                             />
                     }
                     : {
                         header: data,
                         cell: ({ rowIndex, onCellChange }: any) =>
                             <Dropdown
-                                value={props.data[rowIndex][data].value || ''}
-                                items={props.data[rowIndex][data].items}
-                                onChange={newValue => onCellChange(newValue, props, rowIndex, data)}
+                                value={(this.state.value[rowIndex] == undefined) ? "-----" : this.state.value[rowIndex][data].value}
+                                items={(this.state.value[rowIndex] == undefined) ? this.defaultRowData[data].items as any : this.state.value[rowIndex][data].items}
+                                onChange={newValue => onCellChange(newValue, this.state.value, rowIndex, data)}
                             />
                     }
                 this.columns.push(col);
             });
         }
-        KucTable(props);
-    }
-    render() {
+        KucTable();
         return (
             <Table
                 columns={this.columns}

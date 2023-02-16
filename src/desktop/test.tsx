@@ -4,7 +4,7 @@ import { createRoot } from 'react-dom/client';
 import KucTable from "@common/kucTable";
 const data = [
     {
-        test: {
+        "test": {
             items: [{ label: "-----", value: "-----" }],
             value: "-----"
         }
@@ -12,7 +12,7 @@ const data = [
 ];
 const defaultRowData =
 {
-    test: {
+    "test": {
         items: [{ label: "-----", value: "-----" }],
         value: "-----"
     }
