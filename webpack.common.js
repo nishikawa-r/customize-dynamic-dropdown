@@ -3,14 +3,7 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: {
-    desktop: './src/desktop/index.tsx',
-    config: './src/config/index.ts',
-    dynamicDropdown: './src/common/dynamicDropdown.ts',
-    'kintone-api': './src/common/kintone-api.ts',
-    static: './src/common/static.ts',
-    kucTable: './src/common/kucTable.tsx',
     index: './src/desktop/index.tsx',
-    test: './src/desktop/test.tsx',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx', 'json'],

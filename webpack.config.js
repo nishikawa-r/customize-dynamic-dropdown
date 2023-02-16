@@ -7,10 +7,6 @@ module.exports = {
     // モジュールバンドルを行うファイルの指定
     // entry内のプロパティ名がアウトプットファイル名になる（今回の場合main.jsとなる）
     entry: {
-        dynamiDropdown: './src/common/dynamicDropdown.ts',
-        static: './src/static/static.ts',
-        'kintone-api': './src/common/kintone-api.ts',
-        kucTable: './src/common/kucTable.tsx',
         index: './src/desktop/index.tsx',
     },
     // ちなみにwebpackは標準でmain.jsというファイル名でアウトプットを行うため、以下のように書き換えることも可能
