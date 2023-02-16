@@ -27,6 +27,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         this.data = props.data;
         const el = this.data;
         this.LookUp = new LookUp();
+        this.SubTableLookUp = props.dynamicDropdown;
         this.LookUp.Settings = this.SubTableLookUp.Settings;
         this.LookUp.RespValue = this.SubTableLookUp.RespValue;
         const data = el.map((ele) => {
@@ -36,7 +37,7 @@ export default class KucTable extends React.Component<kucTable.props> {
             });
             return obj;
         });
-        this.SubTableLookUp = props.dynamicDropdown;
+
         const datas = props.data;
         this.state = {
             value: data.length ? data : [{}],
@@ -45,51 +46,47 @@ export default class KucTable extends React.Component<kucTable.props> {
 
         this.defaultRowData = props.defaultRowData;
     }
-    SetOptionssubTitle = ({ e, child }: any) => {
-        this.SubTableLookUp.Settings.Code = (this.SubTableLookUp[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent].subTitle == "")
-            ? e.data[e.rowIndex][this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent].value
-            : this.SubTableLookUp.Settings.Code = e.data[e.rowIndex][this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent].value;
+    SetOptionssubTitle = (e: any, child: any) => {
+        this.SubTableLookUp.Settings.Code = (this.SubTableLookUp.Settings.kucTable[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent].subTitle == "")
+            ? e.data[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent]
+            : this.SubTableLookUp.Settings.Code = e.data[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent];
         this.SubTableLookUp.Settings.BranchCode = (this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].subTitle == "")
-            ? e.data[e.rowIndex][child].value
-            : this.SubTableLookUp.Settings.BranchCode = e.data[e.rowIndex][child].value;
+            ? e.data[child]
+            : this.SubTableLookUp.Settings.BranchCode = e.data[child];
 
         console.log(this.SubTableLookUp.Settings.Code);
+        return;
     };
     CodeSelectChange = ({ e, child }: any) => {
-        this.SetOptionssubTitle({ e, child });
+        this.SetOptionssubTitle(e, child);
         this.SubTableLookUp.RespValue.BranchNoArr = [{ label: "-----", value: "-----" }];
-        if (e.data[e.rowIndex][e.fieldName].value != "-----") {
-            this.SubTableLookUp.BranchNoOptionsList(this.SubTableLookUp[e.fieldName], this.SubTableLookUp[child], child);
+        if (e.data[e.fieldName] != "-----") {
+            this.SubTableLookUp.BranchNoOptionsList(this.SubTableLookUp.Settings.kucTable[e.fieldName], this.SubTableLookUp.Settings.kucTable[child], child);
         }
-        e.data[e.rowIndex][child] = {
+        e.data[child] = {
             items: this.SubTableLookUp.RespValue.BranchNoArr,
             value: (this.SubTableLookUp.RespValue.BranchNoArr[0] != null) ? this.SubTableLookUp.RespValue.BranchNoArr[0].value : "-----"
         };
-        Object.keys(this.SubTableLookUp).forEach((property) => {
-            if (this.SubTableLookUp[property].isLookUp && (this.SubTableLookUp[property].doLookUpchange == child || this.SubTableLookUp[property].doLookUpchange == e.fieldName)) {
-                e.data[e.rowIndex][property] = {
-                    value: ""
-                };
+        Object.keys(this.SubTableLookUp.Settings.kucTable).forEach((property) => {
+            if (this.SubTableLookUp.Settings.kucTable[property].isLookUp && (this.SubTableLookUp.Settings.kucTable[property].doLookUpchange == child || this.SubTableLookUp.Settings.kucTable[property].doLookUpchange == e.fieldName)) {
+                e.data[property] = ""
             }
         });
-        if (e.data[e.rowIndex][e.fieldName].value != "-----") {
-            this.LookUp.GetLookUpValue(this.SubTableLookUp[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent], e);
+        if (e.data[e.fieldName].value != "-----") {
+            this.LookUp.GetLookUpValue(this.SubTableLookUp.Settings.kucTable[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent], e);
             console.log(this.SubTableLookUp.RespValue.LookUpValue);
             this.SubTableLookUp.Settings.propertyArr.forEach((property: any) => {
-                e.data[e.rowIndex][property] = {
-                    value: (this.SubTableLookUp.RespValue.LookUpValue == null || this.SubTableLookUp.RespValue.LookUpValue[property] == null) ? "" : this.SubTableLookUp.RespValue.LookUpValue[property]
-                };
+                e.data[property] = (this.SubTableLookUp.RespValue.LookUpValue == null || this.SubTableLookUp.RespValue.LookUpValue[property] == null) ? "" : this.SubTableLookUp.RespValue.LookUpValue[property]
+
             });
         }
         return e;
     };
     BranchCodeSelectChange = ({ e, child }: any) => {
-        this.SetOptionssubTitle({ e, child });
-        this.LookUp.GetLookUpValue(this.SubTableLookUp[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent], e);
+        this.SetOptionssubTitle(e, child);
+        this.LookUp.GetLookUpValue(this.SubTableLookUp.Settings.kucTable[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent], e);
         this.SubTableLookUp.Settings.propertyArr.forEach((property: any) => {
-            e.data[e.rowIndex][property] = {
-                value: (this.SubTableLookUp.RespValue.LookUpValue == null || this.SubTableLookUp.RespValue.LookUpValue[property] == null) ? (this.SubTableLookUp[property].isLookUp == true && this.SubTableLookUp[property].lookUpTable == "") ? e.data[e.rowIndex][property].value : "" : this.SubTableLookUp.RespValue.LookUpValue[property]
-            };
+            e.data[property] = (this.SubTableLookUp.RespValue.LookUpValue == null || this.SubTableLookUp.RespValue.LookUpValue[property] == null) ? (this.SubTableLookUp.Settings.kucTable[property].isLookUp == true && this.SubTableLookUp.Settings.kucTable[property].lookUpTable == "") ? e.data[property] : "" : this.SubTableLookUp.RespValue.LookUpValue[property];
         });
         return e;
     };
@@ -144,27 +141,37 @@ export default class KucTable extends React.Component<kucTable.props> {
         console.log('data: ', this.state.value);
         console.log('data: ', this.state.data, rowIndex);
         let code = null;
-        let e = "";
+        let es = { data: {} };
+        let e = {
+            data: data[rowIndex],
+            rowIndex: rowIndex,
+            fieldName: fieldName
+        };
+        console.log(e);
         Object.keys(this.SubTableLookUp.forDynamicValueAcquisition.childObj).forEach(async (child) => {
             if (fieldName == this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent) {
-                e = this.CodeSelectChange({ e, child });
+                es = this.CodeSelectChange({ e, child });
                 code = this.SubTableLookUp.Settings.Code;
                 return;
             };
             if (fieldName == child) {
-                e = this.BranchCodeSelectChange({ e, child });
+                es = this.BranchCodeSelectChange({ e, child });
                 code = this.SubTableLookUp.Settings.BranchCode;
                 return;
             };
             return;
         });
-        this.setRecord({ data, code, fieldName });
+        // this.setRecord({ data, code, fieldName });
         this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
-        if (this.defaultRowData[fieldName].items != undefined) {
-            // let obj = { items: [{ label: "test", value: "test" }] } as dyDropDwn.defaultData;
-            // this.state.data.splice(rowIndex, 0, { [fieldName]: obj });
-            this.state.data[rowIndex][fieldName].items = [{ label: "test", value: "test" }];
-        }
+        Object.keys(this.defaultRowData).forEach((propety) => {
+            if (this.defaultRowData[propety].items != undefined && (es.data as any)[propety].items != undefined) {
+                // let obj = { items: [{ label: "test", value: "test" }] } as dyDropDwn.defaultData;
+                // this.state.data.splice(rowIndex, 0, { [fieldName]: obj });
+                this.state.data[rowIndex] = { [propety]: { items: [] } }
+                this.state.data[rowIndex][propety].items = (es.data as any)[propety].items;
+                this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
+            }
+        });
         this.setState({ value: this.state.value, data: this.state.data })
     }
     render() {
@@ -172,6 +179,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         const KucTable = () => {
             Object.keys(this.defaultRowData).forEach((data) => {
                 console.log(this.state.value);
+                console.log(this.state.data);
                 let col = (this.defaultRowData[data].items == undefined)
                     ? {
                         header: data,
@@ -186,7 +194,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                         cell: ({ rowIndex, onCellChange }: any) =>
                             <Dropdown
                                 value={this.state.value[rowIndex][data]}
-                                items={(this.state.data[rowIndex] != undefined) ? this.state.data[rowIndex][data].items : this.defaultRowData[data].items as any}
+                                items={(this.state.data[rowIndex] != undefined && this.state.data[rowIndex][data] != undefined) ? this.state.data[rowIndex][data].items : this.defaultRowData[data].items as any}
                                 onChange={newValue => onCellChange(newValue, this.state.value, rowIndex, data)}
                             />
                     }

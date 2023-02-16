@@ -5,7 +5,7 @@ import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
 import KucTable from "@common/kucTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone as kintoneType } from "@type/kintone";
-import { events, tableCode, tableLabel } from "@common/static"
+import { events, tableCode, tableLabel, spaceCode } from "@common/static"
 
 kintone.events.on(events, async (event: kintoneType.Event) => {
     let SubTableLookUp = new dynamicDropDown();
@@ -21,8 +21,8 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                     if (SettingKuc[property].parent != "" && recordTableRow.value[SettingKuc[property].parent as string] && recordTableRow.value[SettingKuc[property].parent as string].value != "") {
                         let DoIntialCodeSelect = () => {
                             return new Promise(async (resolve, reject) => {
-                                initialObj[property] = { value: [] };
-                                initialObj[property].value = await SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);
+                                initialObj[property] = [];
+                                initialObj[property] = await SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);
                                 resolve(initialObj[property]);
                             });
                         }
@@ -54,7 +54,7 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
             console.log({ result });
             const data = (event.record[tableCode].value[0].id != null) ? result : SubTableLookUp.initialData;
             const root = createRoot(
-                document.getElementById('root') as HTMLElement
+                kintone.app.record.getSpaceElement(spaceCode) as HTMLElement
             );
             root.render(
                 <KucTable

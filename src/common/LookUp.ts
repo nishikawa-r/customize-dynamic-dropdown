@@ -38,7 +38,7 @@ export class LookUp {
         console.log(LookUpObj);
         return LookUpObj;
     }
-    public SettingLookUpObj({ e }: any) {
+    public SettingLookUpObj(e: any) {
         let Kuc = this.Settings.kucTable;
         let LookUpObj: any = {};
         this.Settings.propertyArr = Object.keys(Kuc).filter((property) => {
@@ -50,7 +50,7 @@ export class LookUp {
         console.log(LookUpObj);
         return LookUpObj;
     }
-    public GetLookUpValue({ lookUpObj, e }: any) {
+    public GetLookUpValue(lookUpObj: any, e: any) {
         let self = this;
         // this.RespValue.LookUpValue = null;
         let SettingLookUpObj = this.SettingLookUpObj(e);
