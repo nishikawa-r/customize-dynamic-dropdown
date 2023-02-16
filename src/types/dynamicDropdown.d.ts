@@ -28,7 +28,7 @@ export declare module dyDropDwn {
     };
     type defaultData = {
         items?: DropdownItem[];
-        value: string;
+        value?: string;
     }
     type kucTable = {
         [key: string]: kucTableItems
