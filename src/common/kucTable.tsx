@@ -90,7 +90,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         });
         return e;
     };
-    setRecord = ({ kucTableValue, code, field }: any) => {
+    setRecord = (kucTableValue: any) => {
         let record = kintone.app.record.get();
         let self = this;
         record.record[tableCode].value = kucTableValue.map(function (kucTableRow: any) {
@@ -99,13 +99,13 @@ export default class KucTable extends React.Component<kucTable.props> {
                     if (self.SubTableLookUp.Settings.kucTable[column].subTitle != "") {
                         recordTableRow[column] = {
                             type: 'SINGLE_LINE_TEXT',
-                            value: ((kucTableRow[column].value != "-----")) ? kucTableRow[column].value : ""
+                            value: ((kucTableRow[column] != "-----")) ? kucTableRow[column] : ""
                         };
                     }
                     else {
                         recordTableRow[column] = {
                             type: 'SINGLE_LINE_TEXT',
-                            value: ((kucTableRow[column].value != "-----")) ? kucTableRow[column].value : ""
+                            value: ((kucTableRow[column] != "-----")) ? kucTableRow[column] : ""
                         };
                     }
                     return recordTableRow;
@@ -116,6 +116,8 @@ export default class KucTable extends React.Component<kucTable.props> {
     };
     handleRowAdd = ({ rowIndex, data }: any) => {
         let obj: any = {};
+        this.state.value.splice(rowIndex, 1, [] as any);
+        this.state.data.splice(rowIndex, 1, [] as any);
         Object.keys(this.defaultRowData).forEach((e: string) => {
             obj[e as any] = this.defaultRowData[e].value;
             if (this.defaultRowData[e].items != undefined) {
@@ -127,6 +129,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         this.setState({ value: this.state.value, data: this.state.data })
         console.log('data: ', this.state.value);
         console.log('data: ', this.state.data, rowIndex);
+        this.setRecord(this.state.value);
     }
 
     handleRowRemove = ({ rowIndex, data }: any) => {
@@ -135,6 +138,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         console.log('data: ', data);
         console.log('data: ', this.state.value);
         console.log('data: ', this.state.data, rowIndex);
+        this.setRecord(this.state.value);
     }
 
     handleCellChange = ({ rowIndex, data, fieldName }: any) => {
@@ -161,17 +165,15 @@ export default class KucTable extends React.Component<kucTable.props> {
             };
             return;
         });
-        // this.setRecord({ data, code, fieldName });
         this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
         Object.keys(this.defaultRowData).forEach((propety) => {
             if (this.defaultRowData[propety].items != undefined && (es.data as any)[propety].items != undefined) {
-                // let obj = { items: [{ label: "test", value: "test" }] } as dyDropDwn.defaultData;
-                // this.state.data.splice(rowIndex, 0, { [fieldName]: obj });
                 this.state.data[rowIndex] = { [propety]: { items: [] } }
                 this.state.data[rowIndex][propety].items = (es.data as any)[propety].items;
                 this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
             }
         });
+        this.setRecord(this.state.value);
         this.setState({ value: this.state.value, data: this.state.data })
     }
     render() {
