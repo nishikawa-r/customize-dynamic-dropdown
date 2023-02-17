@@ -3,6 +3,7 @@ import { kintoneApi } from "@common/kintone-api";
 import { kintone } from "@type/kintone";
 import { api as Api } from "@type/kintone-api";
 import { kucTable } from "@common/static";
+import { Dropdown } from "kintone-ui-component";
 export class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
@@ -41,16 +42,19 @@ export class dynamicDropdown {
     }
     public CodeOptionsList(parentObj: dyDropDwn.defaultObj) {
         let self = this;
-        let CodeList: dyDropDwn.DropdownItem[] = [];
+        let CodeList: dyDropDwn.DropdownItem[] = [{ label: "-----", value: "-----" }];
         this.RespValue.CodeArr = [{ label: "-----", value: "-----" }];
         console.log(this.RespValue.CodeArr, parentObj);
         console.log(parentObj);
         this.RespValue.AllCodeResponceValue[parentObj.app].records.forEach((element) => {
             console.log(element);
+            let i = 0;
             let subTitle = (parentObj.subTitle != "") ? `(${element[parentObj.subTitle].value})` : "";
             CodeList.push({ "label": element[parentObj.parentOptionCode].value + subTitle, "value": (element[parentObj.parentOptionCode].value?.toString()) as string });
             CodeList.forEach((ele, index) => {
-                self.RespValue.CodeArr[index + 1] = ele;
+                if (!self.RespValue.CodeArr.some(e => e.value === ele.value)) {
+                    self.RespValue.CodeArr[self.RespValue.CodeArr.length] = ele;
+                }
                 console.log(ele);
             });
         });
@@ -67,7 +71,7 @@ export class dynamicDropdown {
         }
         else {
             this.RespValue.BranchNoList = TableValue?.map((ele, index) => {
-                if (index == 0) {
+                if (index > -1) {
                     let test: dyDropDwn.SubtableRow[] = (ele[childObj.parentOptionTable].value as dyDropDwn.SubtableRow[]);
                     return test.map((ele) => {
                         let subTitle = (childObj.subTitle != "") ? `(${ele.value[childObj.subTitle].value})` : "";
@@ -77,7 +81,8 @@ export class dynamicDropdown {
                     });
                 }
             }) as dyDropDwn.DropdownItem[][];
-            const BranchNoList = this.RespValue.BranchNoList.flat();
+
+            const BranchNoList = new Map(this.RespValue.BranchNoList.flat().map((user) => [user.value, user])) as any;
             this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...BranchNoList];
         }
         return this.RespValue.BranchNoArr;
