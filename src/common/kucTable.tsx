@@ -72,7 +72,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                 e.data[property] = ""
             }
         });
-        if (e.data[e.fieldName].value != "-----") {
+        if (e.data[e.fieldName] != "-----") {
             this.LookUp.GetLookUpValue(this.SubTableLookUp.Settings.kucTable[this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent], e);
             console.log(this.SubTableLookUp.RespValue.LookUpValue);
             this.SubTableLookUp.Settings.propertyArr.forEach((property: any) => {
@@ -95,7 +95,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         let self = this;
         record.record[tableCode].value = kucTableValue.map(function (kucTableRow: any) {
             return {
-                value: Object.keys(kucTableRow).reduce(function ({ recordTableRow, column }: any) {
+                value: Object.keys(kucTableRow).reduce(function (recordTableRow: any, column: any) {
                     if (self.SubTableLookUp.Settings.kucTable[column].subTitle != "") {
                         recordTableRow[column] = {
                             type: 'SINGLE_LINE_TEXT',
@@ -116,8 +116,8 @@ export default class KucTable extends React.Component<kucTable.props> {
     };
     handleRowAdd = ({ rowIndex, data }: any) => {
         let obj: any = {};
-        this.state.value.splice(rowIndex, 1, [] as any);
-        this.state.data.splice(rowIndex, 1, [] as any);
+        this.state.value.splice(rowIndex, 0, [{}] as any);
+        this.state.data.splice(rowIndex, 0, [{}] as any);
         Object.keys(this.defaultRowData).forEach((e: string) => {
             obj[e as any] = this.defaultRowData[e].value;
             if (this.defaultRowData[e].items != undefined) {

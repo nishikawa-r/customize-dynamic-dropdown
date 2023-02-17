@@ -183,11 +183,6 @@ export class dynamicDropdown {
             this.defaultRowData = {};
             this.initialObj = {};
             Object.keys(this.Settings.kucTable).map((property) => {
-                // let columnObj: dyDropDwn.column = {
-                //     header: "", cell: ({ rowIndex, onCellChange }) => {
-                //         return (<></>)
-                //     }
-                // };
                 if (this.Settings.kucTable[property].type == "dropdown") {
                     this.defaultRowData[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }
                     this.initialObj[property] = { items: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[]), value: (this.Settings.kucTable[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value }

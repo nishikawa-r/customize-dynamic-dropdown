@@ -6,6 +6,7 @@ import KucTable from "@common/kucTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone as kintoneType } from "@type/kintone";
 import { events, tableCode, tableLabel, spaceCode } from "@common/static"
+import { Label } from '@kintone/kintone-ui-component';
 
 kintone.events.on(events, async (event: kintoneType.Event) => {
     let SubTableLookUp = new dynamicDropDown();
@@ -56,12 +57,16 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
             const root = createRoot(
                 kintone.app.record.getSpaceElement(spaceCode) as HTMLElement
             );
+            kintone.app.record.setFieldShown(tableCode, false);
             root.render(
-                <KucTable
-                    data={data}
-                    defaultRowData={SubTableLookUp.defaultRowData}
-                    dynamicDropdown={SubTableLookUp as dynamicDropDown}
-                />
+                <>
+                    <Label text={tableLabel} />
+                    <KucTable
+                        data={data}
+                        defaultRowData={SubTableLookUp.defaultRowData}
+                        dynamicDropdown={SubTableLookUp as dynamicDropDown}
+                    />
+                </>
             );
             resolve("")
         });
