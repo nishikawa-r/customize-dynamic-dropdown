@@ -82,7 +82,12 @@ export class dynamicDropdown {
                 }
             }) as dyDropDwn.DropdownItem[][];
 
-            const BranchNoList = new Map(this.RespValue.BranchNoList.flat().map((user) => [user.value, user])) as any;
+            const BranchNoList = Array.from(
+                this.RespValue.BranchNoList.flat().reduce((map, currentitem) =>
+                    map.set(currentitem.value, currentitem),
+                    new Map()
+                ).values()
+            );
             this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...BranchNoList];
         }
         return this.RespValue.BranchNoArr;
