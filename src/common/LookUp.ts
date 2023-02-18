@@ -74,12 +74,20 @@ export class LookUp {
                     }).filter(e => e);
                 }).flat() as dyDropDwn.LookUp[];
                 if (LookUpValue.length == 1) {
+                    this.isVisible = false;
                     this.RespValue.LookUpValue = LookUpValue[0];
                 }
-                else {
+                else if (LookUpValue.length > 1) {
                     this.message = subTableErrorMessage;
                     this.isVisible = true;
-
+                    Object.keys(this.Settings.kucTable).forEach((property) => {
+                        if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
+                            (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [property]: "" };
+                        }
+                    });
+                }
+                else {
+                    this.isVisible = false;
                     Object.keys(this.Settings.kucTable).forEach((property) => {
                         if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
                             (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [property]: "" };
@@ -96,6 +104,7 @@ export class LookUp {
                     })
                 }
                 else {
+                    this.isVisible = false;
                     this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
                 }
             }
