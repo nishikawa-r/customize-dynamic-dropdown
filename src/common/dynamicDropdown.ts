@@ -2,7 +2,7 @@ import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintoneApi } from "@common/kintone-api";
 import { kintone } from "@type/kintone";
 import { api as Api } from "@type/kintone-api";
-import { kucTable } from "@common/static";
+import { kucTable, duplicateError } from "@common/static";
 import { Dropdown } from "kintone-ui-component";
 export class dynamicDropdown {
     public Settings: dyDropDwn.Settings;
@@ -51,14 +51,24 @@ export class dynamicDropdown {
             let i = 0;
             let subTitle = (parentObj.subTitle != "") ? `(${element[parentObj.subTitle].value})` : "";
             CodeList.push({ "label": element[parentObj.parentOptionCode].value + subTitle, "value": (element[parentObj.parentOptionCode].value?.toString()) as string });
-            CodeList.forEach((ele, index) => {
-                if (!self.RespValue.CodeArr.some(e => e.value === ele.value)) {
-                    self.RespValue.CodeArr[self.RespValue.CodeArr.length] = ele;
-                }
-                console.log(ele);
-            });
         });
-        return self.RespValue.CodeArr;
+        let CodeArr: dyDropDwn.DropdownItem[] = Array.from(
+            CodeList.reduce((map, currentitem) =>
+                map.set(currentitem.value, currentitem),
+                new Map()
+            ).values()
+        );
+        this.RespValue.CodeArr = CodeArr.map((map, index, arr) => {
+            let len = CodeList.filter((e) => { return e.value == map.value }).length;
+            if (len == 1) {
+                return map;
+            }
+            else {
+                map.label = map.value + `(${duplicateError})`;
+                return map;
+            }
+        });
+        return this.RespValue.CodeArr;
     }
     public BranchNoOptionsList(parentObj: dyDropDwn.defaultObj, childObj: dyDropDwn.defaultObj, childName: string) {
         let self = this;
@@ -81,14 +91,25 @@ export class dynamicDropdown {
                     });
                 }
             }) as dyDropDwn.DropdownItem[][];
-
-            const BranchNoList = Array.from(
+            let duplicateBranchList = this.RespValue.BranchNoList.flat();
+            let BranchNoList = Array.from(
                 this.RespValue.BranchNoList.flat().reduce((map, currentitem) =>
                     map.set(currentitem.value, currentitem),
                     new Map()
                 ).values()
             );
-            this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...BranchNoList];
+            let resBranchNoList = BranchNoList.map((map, index, arr) => {
+                let len = duplicateBranchList.filter((e) => { return e.value == map.value }).length;
+                if (len == 1) {
+                    return map;
+                }
+                else {
+                    map.label = map.value + `(${duplicateError})`;
+                    return map;
+                }
+            });
+
+            this.RespValue.BranchNoArr = [...this.RespValue.BranchNoArr, ...resBranchNoList];
         }
         return this.RespValue.BranchNoArr;
     }

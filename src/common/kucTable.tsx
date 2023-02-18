@@ -4,7 +4,6 @@ import { kucTable } from "@type/kucTable";
 import { LookUp } from "@common/LookUp";
 import { events, tableCode, tableLabel, alertHideMessage } from "@common/static"
 import { dyDropDwn } from '@type/dynamicDropdown';
-import { DefaultAlert } from '@common/alert';
 export default class KucTable extends React.Component<kucTable.props> {
     private columns: any;
     private data: ({
@@ -149,39 +148,47 @@ export default class KucTable extends React.Component<kucTable.props> {
     handleCellChange = ({ rowIndex, data, fieldName }: any) => {
         console.log('data: ', this.state.value);
         console.log('data: ', this.state.data, rowIndex);
-        let code = null;
-        let es = { data: {} };
-        let e = {
-            data: data[rowIndex],
-            rowIndex: rowIndex,
-            fieldName: fieldName
-        };
-        console.log(e);
-        Object.keys(this.SubTableLookUp.forDynamicValueAcquisition.childObj).forEach(async (child) => {
-            if (fieldName == this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent) {
-                es = this.CodeSelectChange({ e, child });
-                code = this.SubTableLookUp.Settings.Code;
-                return;
+        if (this.defaultRowData[fieldName].items != undefined) {
+            let code = null;
+            let es = { data: {} };
+            let e = {
+                data: data[rowIndex],
+                rowIndex: rowIndex,
+                fieldName: fieldName
             };
-            if (fieldName == child) {
-                es = this.BranchCodeSelectChange({ e, child });
-                code = this.SubTableLookUp.Settings.BranchCode;
+            console.log(e);
+            Object.keys(this.SubTableLookUp.forDynamicValueAcquisition.childObj).forEach(async (child) => {
+                if (fieldName == this.SubTableLookUp.forDynamicValueAcquisition.childObj[child].parent) {
+                    es = this.CodeSelectChange({ e, child });
+                    code = this.SubTableLookUp.Settings.Code;
+                    return;
+                };
+                if (fieldName == child) {
+                    es = this.BranchCodeSelectChange({ e, child });
+                    code = this.SubTableLookUp.Settings.BranchCode;
+                    return;
+                };
                 return;
-            };
-            return;
-        });
-        this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
-        Object.keys(this.defaultRowData).forEach((propety) => {
-            if (this.defaultRowData[propety].items != undefined && (es.data as any)[propety].items != undefined) {
-                this.state.data[rowIndex] = { [propety]: { items: [] } }
-                this.state.data[rowIndex][propety].items = (es.data as any)[propety].items;
-                this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
-            }
-        });
-        this.state.message = this.LookUp.message;
-        this.state.isVisible = this.LookUp.isVisible;
-        this.setRecord(this.state.value);
-        this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible })
+            });
+            this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
+            Object.keys(this.defaultRowData).forEach((propety) => {
+                if (this.defaultRowData[propety].items != undefined && (es.data as any)[propety].items != undefined) {
+                    this.state.data[rowIndex] = { [propety]: { items: [] } }
+                    this.state.data[rowIndex][propety].items = (es.data as any)[propety].items;
+                    this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
+                }
+            });
+            this.state.message = this.LookUp.message;
+            this.state.isVisible = this.LookUp.isVisible;
+            this.setRecord(this.state.value);
+            this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible })
+        }
+        else {
+            this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
+            this.setRecord(this.state.value);
+            this.setState({ value: this.state.value })
+
+        }
     }
     hide = () => {
         this.setState({ isVisible: false });

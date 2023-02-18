@@ -79,6 +79,10 @@ export class LookUp {
                 else {
                     this.message = subTableErrorMessage;
                     this.isVisible = true;
+
+                    Object.keys(LookUpValue[0]).forEach((e) => {
+                        (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [e]: "" };
+                    })
                 }
             }
             else {
