@@ -1,9 +1,10 @@
 import React from 'react';
-import { Dropdown, Text, Table } from '@kintone/kintone-ui-component';
+import { Dropdown, Alert, Button, Text, Table } from '@kintone/kintone-ui-component';
 import { kucTable } from "@type/kucTable";
 import { LookUp } from "@common/LookUp";
-import { events, tableCode, tableLabel } from "@common/static"
+import { events, tableCode, tableLabel, alertHideMessage } from "@common/static"
 import { dyDropDwn } from '@type/dynamicDropdown';
+import { DefaultAlert } from '@common/alert';
 export default class KucTable extends React.Component<kucTable.props> {
     private columns: any;
     private data: ({
@@ -18,7 +19,9 @@ export default class KucTable extends React.Component<kucTable.props> {
         }[],
         data: ({
             [key: string]: dyDropDwn.defaultData;
-        })[]
+        })[],
+        message: string,
+        isVisible: boolean
     };
     private SubTableLookUp: any;
     private LookUp: any;
@@ -41,7 +44,9 @@ export default class KucTable extends React.Component<kucTable.props> {
         const datas = props.data;
         this.state = {
             value: data.length ? data : [{}],
-            data: datas
+            data: datas,
+            message: props.message,
+            isVisible: props.isVisible
         }
 
         this.defaultRowData = props.defaultRowData;
@@ -173,9 +178,14 @@ export default class KucTable extends React.Component<kucTable.props> {
                 this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
             }
         });
+        this.state.message = this.LookUp.message;
+        this.state.isVisible = this.LookUp.isVisible;
         this.setRecord(this.state.value);
-        this.setState({ value: this.state.value, data: this.state.data })
+        this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible })
     }
+    hide = () => {
+        this.setState({ isVisible: false });
+    };
     render() {
         this.columns = [];
         const KucTable = () => {
@@ -205,14 +215,20 @@ export default class KucTable extends React.Component<kucTable.props> {
         }
         KucTable();
         return (
-            <Table
-                columns={this.columns}
-                data={this.state.value}
-                defaultRowData={{}}
-                onRowAdd={this.handleRowAdd}
-                onRowRemove={this.handleRowRemove}
-                onCellChange={({ rowIndex, data, fieldName }) => this.handleCellChange({ rowIndex, data, fieldName })}
-            />
+            <>
+                <Table
+                    columns={this.columns}
+                    data={this.state.value}
+                    defaultRowData={{}}
+                    onRowAdd={this.handleRowAdd}
+                    onRowRemove={this.handleRowRemove}
+                    onCellChange={({ rowIndex, data, fieldName }) => this.handleCellChange({ rowIndex, data, fieldName })}
+                />
+                <div>
+                    <Alert text={this.state.message} isVisible={this.state.isVisible} />
+                    <Button text={alertHideMessage} isVisible={this.state.isVisible} onClick={() => this.hide()} />
+                </div>
+            </>
         )
     }
 }

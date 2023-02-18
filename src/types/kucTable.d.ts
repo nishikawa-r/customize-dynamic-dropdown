@@ -9,6 +9,8 @@ export module kucTable {
             [key: string]: dyDropDwn.defaultData;
         },
         dynamicDropdown?: dynamicDropDown;
+        message: string,
+        isVisible: boolean
 
     }
 }

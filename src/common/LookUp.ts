@@ -1,8 +1,14 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
+import React from 'react';
+import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
+import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage } from "@common/static"
 export class LookUp {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
+    public message = subTableErrorMessage;
+    public isVisible = false;
     constructor() {
         const kucTable = {};
         this.RespValue = {
@@ -58,22 +64,35 @@ export class LookUp {
         Object.keys(SettingLookUpObj).forEach((property) => {
             let TableValue = this.RespValue.AllCodeResponceValue[lookUpObj.app as number].records.filter((ele) => ele[lookUpObj.parentOptionCode as string].value == this.Settings.Code);
             if (this.Settings.kucTable[property].lookUpTable != "") {
-                this.RespValue.LookUpValue = TableValue?.map((ele, index) => {
-                    if (index == 0) {
-                        let test: dyDropDwn.SubtableRow[] = (ele[this.Settings.kucTable[property].lookUpTable as string].value as dyDropDwn.SubtableRow[]);
-                        return test.map((ele) => {
-                            if (ele.value[this.Settings.kucTable[property].lookUpkey as string].value == this.Settings.BranchCode) {
-                                return this.CreateLookUpObj(ele.value);
-                            }
-                            return;
-                        }).filter(e => e)[0];
-                    }
-                }).flat()[0] as dyDropDwn.LookUp;
+                const LookUpValue = TableValue?.map((ele, index) => {
+                    let test: dyDropDwn.SubtableRow[] = (ele[this.Settings.kucTable[property].lookUpTable as string].value as dyDropDwn.SubtableRow[]);
+                    return test.map((ele) => {
+                        if (ele.value[this.Settings.kucTable[property].lookUpkey as string].value == this.Settings.BranchCode) {
+                            return this.CreateLookUpObj(ele.value);
+                        }
+                        return;
+                    }).filter(e => e);
+                }).flat() as dyDropDwn.LookUp[];
+                if (LookUpValue.length == 1) {
+                    this.RespValue.LookUpValue = LookUpValue[0];
+                }
+                else {
+                    this.message = subTableErrorMessage;
+                    this.isVisible = true;
+                }
             }
             else {
-                this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
+                if (TableValue.length != 1) {
+                    this.message = recordErrorMessage;
+                    this.isVisible = true;
+                }
+                else {
+                    this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
+                }
             }
         });
         console.log(this.RespValue.LookUpValue);
     }
+
 }
+

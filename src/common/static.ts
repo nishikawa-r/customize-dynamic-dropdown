@@ -3,6 +3,9 @@ export const events = ['app.record.create.show', 'app.record.edit.show'];
 export const tableCode = 'セット項目テーブル';
 export const tableLabel = 'セット項目テーブル';
 export const spaceCode = 'LookUp_Space';
+export const recordErrorMessage = "レコードの値が重複しているためルックアップが取得できません"
+export const subTableErrorMessage = "サブテーブルの値が重複しているためルックアップが取得できません"
+export const alertHideMessage = "アラートを閉じる"
 export const kucTable: dyDropDwn.kucTable = {
     枝番号: {
         type: "dropdown",

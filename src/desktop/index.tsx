@@ -65,6 +65,8 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                         data={data}
                         defaultRowData={SubTableLookUp.defaultRowData}
                         dynamicDropdown={SubTableLookUp as dynamicDropDown}
+                        message={""}
+                        isVisible={false}
                     />
                 </>
             );
