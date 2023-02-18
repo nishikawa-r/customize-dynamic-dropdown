@@ -83,6 +83,9 @@ export default class KucTable extends React.Component<kucTable.props> {
                 e.data[property] = (this.SubTableLookUp.RespValue.LookUpValue == null || this.SubTableLookUp.RespValue.LookUpValue[property] == null) ? "" : this.SubTableLookUp.RespValue.LookUpValue[property]
 
             });
+        } else {
+            this.state.isVisible = false;
+            this.setState({ isVisible: this.state.isVisible })
         }
         return e;
     };
@@ -150,6 +153,7 @@ export default class KucTable extends React.Component<kucTable.props> {
         console.log('data: ', this.state.data, rowIndex);
         if (this.defaultRowData[fieldName].items != undefined) {
             let code = null;
+            this.LookUp.isVisible = false;
             let es = { data: {} };
             let e = {
                 data: data[rowIndex],
@@ -178,7 +182,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                     this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
                 }
             });
-            this.state.message = this.LookUp.message;
+            this.state.message = this.LookUp.message + `:${e.fieldName}[${e.rowIndex}]`;
             this.state.isVisible = this.LookUp.isVisible;
             this.setRecord(this.state.value);
             this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible })
