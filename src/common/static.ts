@@ -8,21 +8,6 @@ export const subTableErrorMessage = "サブテーブルの値が重複してい�
 export const duplicateError = "値が重複しているためサブタイトルが表示できません"
 export const alertHideMessage = "アラートを閉じる"
 export const kucTable: dyDropDwn.kucTable = {
-    枝番号: {
-        type: "dropdown",
-        columnLabel: "枝番号",
-        defaultRowData: [{ label: "-----", value: "-----" }],
-        isLookUp: false,
-        lookUpField: null,
-        lookUpTable: "",
-        lookUpkey: "",
-        doLookUpchange: "",
-        parent: "検査項目コード",
-        parentOptionCode: "枝番号",
-        parentOptionTable: "検査内容テーブル",
-        subTitle: "枝名",
-        app: 569
-    },
     検査項目コード: {
         type: "dropdown",
         columnLabel: "検査項目コード",
@@ -36,6 +21,21 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "検査項目コード",
         parentOptionTable: "",
         subTitle: "検査項目名",
+        app: 569
+    },
+    枝番号: {
+        type: "dropdown",
+        columnLabel: "枝番号",
+        defaultRowData: [{ label: "-----", value: "-----" }],
+        isLookUp: false,
+        lookUpField: null,
+        lookUpTable: "",
+        lookUpkey: "",
+        doLookUpchange: "",
+        parent: "検査項目コード",
+        parentOptionCode: "枝番号",
+        parentOptionTable: "検査内容テーブル",
+        subTitle: "枝名",
         app: 569
     },
     検査項目名: {

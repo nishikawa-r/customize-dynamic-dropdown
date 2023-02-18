@@ -80,15 +80,20 @@ export class LookUp {
                     this.message = subTableErrorMessage;
                     this.isVisible = true;
 
-                    Object.keys(LookUpValue[0]).forEach((e) => {
-                        (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [e]: "" };
-                    })
+                    Object.keys(this.Settings.kucTable).forEach((property) => {
+                        if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
+                            (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [property]: "" };
+                        }
+                    });
                 }
             }
             else {
                 if (TableValue.length != 1) {
                     this.message = recordErrorMessage;
                     this.isVisible = true;
+                    Object.keys(this.CreateLookUpObj(TableValue[0])).forEach((e) => {
+                        (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [e]: "" };
+                    })
                 }
                 else {
                     this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
