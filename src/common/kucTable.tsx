@@ -177,7 +177,8 @@ export default class KucTable extends React.Component<kucTable.props> {
             this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
             Object.keys(this.defaultRowData).forEach((propety) => {
                 if (this.defaultRowData[propety].items != undefined && (es.data as any)[propety].items != undefined) {
-                    this.state.data[rowIndex] = { [propety]: { items: [] } }
+                    let obj = { [propety]: { items: [] } };
+                    this.state.data[rowIndex] = { ...this.state.data[rowIndex], ...obj };
                     this.state.data[rowIndex][propety].items = (es.data as any)[propety].items;
                     this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
                 }

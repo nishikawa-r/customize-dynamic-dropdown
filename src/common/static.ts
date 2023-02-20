@@ -1,71 +1,71 @@
 import { dyDropDwn } from "@type/dynamicDropdown";
 export const events = ['app.record.create.show', 'app.record.edit.show'];
-export const tableCode = 'セット項目テーブル';
-export const tableLabel = 'セット項目テーブル';
+export const tableCode = '商品在庫数テーブル';
+export const tableLabel = '商品在庫数テーブル';
 export const spaceCode = 'LookUp_Space';
 export const recordErrorMessage = "レコードの値が重複しているためルックアップが取得できません"
 export const subTableErrorMessage = "サブテーブルの値が重複しているためルックアップが取得できません"
 export const duplicateError = "値が重複しているためサブタイトルが表示できません"
 export const alertHideMessage = "アラートを閉じる"
 export const kucTable: dyDropDwn.kucTable = {
-    検査項目コード: {
+    商品カテゴリー: {
         type: "dropdown",
-        columnLabel: "検査項目コード",
-        defaultRowData: "",
-        isLookUp: false,
-        lookUpField: null,
-        lookUpTable: "",
-        lookUpkey: "",
-        doLookUpchange: "",
-        parent: "",
-        parentOptionCode: "検査項目コード",
-        parentOptionTable: "",
-        subTitle: "検査項目名",
-        app: 569
-    },
-    枝番号: {
-        type: "dropdown",
-        columnLabel: "枝番号",
+        columnLabel: "商品カテゴリー",
         defaultRowData: [{ label: "-----", value: "-----" }],
         isLookUp: false,
         lookUpField: null,
         lookUpTable: "",
         lookUpkey: "",
         doLookUpchange: "",
-        parent: "検査項目コード",
-        parentOptionCode: "枝番号",
-        parentOptionTable: "検査内容テーブル",
-        subTitle: "枝名",
-        app: 569
+        parent: "",
+        parentOptionCode: "商品カテゴリー",
+        parentOptionTable: "",
+        subTitle: "商品例",
+        app: 2
     },
-    検査項目名: {
-        type: "text",
-        columnLabel: "検査項目名",
-        defaultRowData: "",
-        isLookUp: true,
-        lookUpField: "検査項目名",
+    商品名: {
+        type: "dropdown",
+        columnLabel: "商品名",
+        defaultRowData: [{ label: "-----", value: "-----" }],
+        isLookUp: false,
+        lookUpField: null,
         lookUpTable: "",
-        lookUpkey: "検査項目コード",
-        doLookUpchange: "検査項目コード",
-        parent: "",
-        parentOptionCode: "",
-        parentOptionTable: "",
+        lookUpkey: "",
+        doLookUpchange: "",
+        parent: "商品カテゴリー",
+        parentOptionCode: "商品名",
+        parentOptionTable: "商品テーブル",
         subTitle: "",
-        app: 569
+        app: 2
     },
-    枝名: {
+    商品在庫数: {
+        type: "dropdown",
+        columnLabel: "商品在庫数",
+        defaultRowData: [{ label: "-----", value: "-----" }],
+        isLookUp: false,
+        lookUpField: null,
+        lookUpTable: "",
+        lookUpkey: "",
+        doLookUpchange: "",
+        parent: "商品カテゴリー",
+        parentOptionCode: "在庫数",
+        parentOptionTable: "在庫数ドロップダウン用テーブル",
+        subTitle: "",
+        app: 2
+    },
+    単位: {
         type: "text",
-        columnLabel: "枝名",
+        columnLabel: "単位",
         defaultRowData: "",
         isLookUp: true,
-        lookUpField: "枝名",
-        lookUpTable: "検査内容テーブル",
-        lookUpkey: "枝番号",
-        doLookUpchange: "枝番号",
+        lookUpField: "単位",
+        lookUpTable: "商品テーブル",
+        lookUpkey: "商品名",
+        doLookUpchange: "商品名",
         parent: "",
         parentOptionCode: "",
         parentOptionTable: "",
         subTitle: "",
-        app: 569
-    }
+        app: 2
+    },
 }
