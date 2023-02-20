@@ -1,1 +1,0 @@
-(()=>{"use strict";const t=t=>{if(!document.getElementById("settings"))throw"プラグインのHTMLに、ルート要素が存在しません。"};var e;e=kintone.$PLUGIN_ID,t(e)})();

@@ -1,8 +1,8 @@
 {
-  "name": "kintone-plugin-template",
-  "version": "1.2.0",
-  "author": "ribbit",
-  "license": "MIT",
+  "name": "customize-dynamic-dropdown",
+  "version": "0.1.0",
+  "author": "nishikawa-r",
+  "license": "",
   "scripts": {
     "create-ppk": "kintone-plugin-packer --out dist/plugin-dev.zip plugin",
     "move-ppk": "node scripts/move-ppk.ts",
@@ -29,8 +29,6 @@
     "@kintone/plugin-uploader": "7.1.2",
     "@kintone/rest-api-client": "3.1.10",
     "@kintone/webpack-plugin-kintone-plugin": "6.0.11",
-    "@lb-ribbit/kintone-secrets": "0.2.4",
-    "@lb-ribbit/kintone-xapp": "0.3.3",
     "@mui/icons-material": "5.10.3",
     "@mui/material": "5.10.4",
     "@types/luxon": "3.0.1",

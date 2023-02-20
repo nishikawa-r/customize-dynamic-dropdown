@@ -1,11 +1,17 @@
 {
   "desktop": {
-    "js": ["https://cdn.jsdelivr.net/gh/local-bias/kintone-plugin-tag@latest/cdn/desktop.js"]
+    "js": [
+      ""
+    ]
   },
   "mobile": {
-    "js": ["https://cdn.jsdelivr.net/gh/local-bias/kintone-plugin-tag@latest/cdn/desktop.js"]
+    "js": [
+      ""
+    ]
   },
   "config": {
-    "js": ["https://cdn.jsdelivr.net/gh/local-bias/kintone-plugin-tag@latest/cdn/config.js"]
+    "js": [
+      ""
+    ]
   }
 }
