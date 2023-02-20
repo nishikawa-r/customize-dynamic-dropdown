@@ -5,19 +5,20 @@
 [カンバンボード](https://github.com/users/nishikawa-r/projects/3/views/1?layout=board)
 
 # 動作例
-マスタアプリ
+## マスタアプリ
 
 ![image](https://user-images.githubusercontent.com/102705383/220047520-22fa3e0a-3994-4d73-b3ee-f46c818d2ad4.png)
 
 ![image](https://user-images.githubusercontent.com/102705383/220047745-1853a3a8-1186-4158-a5c7-3070cb49e11b.png)
 
-入力用アプリ
+## 入力用アプリ
 
 ![image](https://user-images.githubusercontent.com/102705383/220047986-59b630df-05cd-47c8-b993-4280e1d4b734.png)
 
 ![image](https://user-images.githubusercontent.com/102705383/220048066-2b802523-66b9-4b2f-abc9-7d7ceed58005.png)
 
 商品名を入力するとそれに対応するマスタのサブテーブルより値をルックアップで取得します(今回でいえば単位の値になります)
+
 ![image](https://user-images.githubusercontent.com/102705383/220048148-d7148040-b4e3-40d1-bf77-90ba40d0e984.png)
 
 ![image](https://user-images.githubusercontent.com/102705383/220048466-55f559e7-aaea-4bb7-85c6-34e18b6d50d3.png)
