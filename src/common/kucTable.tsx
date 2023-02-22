@@ -21,7 +21,8 @@ export default class KucTable extends React.Component<kucTable.props> {
             [key: string]: dyDropDwn.defaultData;
         })[],
         message: string,
-        isVisible: boolean
+        isVisible: boolean,
+        selectedValue: string
     };
     private SubTableLookUp: any;
     private LookUp: any;
@@ -46,7 +47,8 @@ export default class KucTable extends React.Component<kucTable.props> {
             value: data.length ? data : [{}],
             data: datas,
             message: props.message,
-            isVisible: props.isVisible
+            isVisible: props.isVisible,
+            selectedValue: ""
         }
 
         this.defaultRowData = props.defaultRowData;
@@ -199,6 +201,11 @@ export default class KucTable extends React.Component<kucTable.props> {
     hide = () => {
         this.setState({ isVisible: false });
     };
+    SetSelectedValue = (props: string) => {
+        this.state.selectedValue = props;
+        this.setState({ selectedValue: this.state.selectedValue });
+        console.log("value", this.state.selectedValue);
+    }
     render() {
         this.columns = [];
         const KucTable = () => {
@@ -241,7 +248,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                     <Alert text={this.state.message} isVisible={this.state.isVisible} />
                     <Button text={alertHideMessage} isVisible={this.state.isVisible} onClick={() => this.hide()} />
                 </div>
-                <LookUpDuplicateTable isVisible={true} />
+                <LookUpDuplicateTable isVisible={true} selectedValue={this.SetSelectedValue} />
             </>
         )
     }
