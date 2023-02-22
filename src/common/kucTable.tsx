@@ -4,6 +4,7 @@ import { kucTable } from "@type/kucTable";
 import { LookUp } from "@common/LookUp";
 import { events, tableCode, tableLabel, alertHideMessage } from "@common/static"
 import { dyDropDwn } from '@type/dynamicDropdown';
+import LookUpDuplicateTable from '@common/LookUpDuplicateTable';
 export default class KucTable extends React.Component<kucTable.props> {
     private columns: any;
     private data: ({
@@ -240,6 +241,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                     <Alert text={this.state.message} isVisible={this.state.isVisible} />
                     <Button text={alertHideMessage} isVisible={this.state.isVisible} onClick={() => this.hide()} />
                 </div>
+                <LookUpDuplicateTable isVisible={true} />
             </>
         )
     }
