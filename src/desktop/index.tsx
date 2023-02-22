@@ -9,18 +9,17 @@ import { events, tableCode, tableLabel, spaceCode } from "@common/static"
 import { Label } from '@kintone/kintone-ui-component';
 
 kintone.events.on(events, async (event: kintoneType.Event) => {
-    let SubTableLookUp = new dynamicDropDown();
-    let DynamicDropDown = await SubTableLookUp.init();
-    let SettingKuc = SubTableLookUp.Settings.kucTable;
-    let promise = new Promise((resolve, reject) => {
-        let initialObj: ({ [key: string]: dyDropDwn.Dropdown }) = {};
-        let resultArr: ({ [key: string]: dyDropDwn.Dropdown }[]) = [];
-        event.record[tableCode].value.map(async (recordTableRow: Record<string, any>) => {
-            let initialObj: any = {}
-            Object.keys(SubTableLookUp.Settings.kucTable).forEach(async (property) => {
+    try {
+        const SubTableLookUp = new dynamicDropDown();
+        const DynamicDropDown = await SubTableLookUp.init();
+        const SettingKuc = SubTableLookUp.Settings.kucTable;
+        const resultArr: ({ [key: string]: dyDropDwn.Dropdown }[]) = [];
+        for (const recordTableRow of event.record[tableCode].value) {
+            const initialObj: any = {}
+            for (const property of Object.keys(SubTableLookUp.Settings.kucTable)) {
                 if (SettingKuc[property].type == "dropdown") {
                     if (SettingKuc[property].parent != "" && recordTableRow.value[SettingKuc[property].parent as string] && recordTableRow.value[SettingKuc[property].parent as string].value != "") {
-                        let DoIntialCodeSelect = () => {
+                        const DoIntialCodeSelect = () => {
                             return new Promise(async (resolve, reject) => {
                                 initialObj[property] = [];
                                 initialObj[property] = await SubTableLookUp.intialCodeSelect(recordTableRow.value, property, SubTableLookUp.forDynamicValueAcquisition);
@@ -28,8 +27,7 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                             });
                         }
                         initialObj[property] = await DoIntialCodeSelect();
-                    }
-                    else {
+                    } else {
                         let arr;
                         if (SettingKuc[property].subTitle != "") {
                             console.log(SettingKuc[property].defaultRowData);
@@ -38,46 +36,37 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                         }
                         console.log(arr);
                         initialObj[property] = {
-                            items: SettingKuc[property].defaultRowData, value: ((recordTableRow.value[property].value != "") && (arr != "-----")) ? recordTableRow.value[property].value : (SettingKuc[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value
+                            items: SettingKuc[property].defaultRowData,
+                            value: ((recordTableRow.value[property].value != "") && (arr != "-----")) ? recordTableRow.value[property].value : (SettingKuc[property].defaultRowData as dyDropDwn.DropdownItem[])[0].value
                         }
                     }
-                }
-                else {
+                } else {
                     initialObj[property] = { value: recordTableRow.value[property].value || SettingKuc[property].defaultRowData }
                 }
-                initialObj;
-            });
+            }
             resultArr.push(initialObj);
-        });
-        resolve(resultArr);
-    }).then((result: any) => { // #3
-        return new Promise(function (resolve, reject) {
-            console.log({ result });
-            const data = (event.record[tableCode].value[0].id != null) ? result : SubTableLookUp.initialData;
-            const root = createRoot(
-                kintone.app.record.getSpaceElement(spaceCode) as HTMLElement
-            );
-            kintone.app.record.setFieldShown(tableCode, false);
-            root.render(
-                <>
-                    <Label text={tableLabel} />
-                    <KucTable
-                        data={data}
-                        defaultRowData={SubTableLookUp.defaultRowData}
-                        dynamicDropdown={SubTableLookUp as dynamicDropDown}
-                        message={""}
-                        isVisible={false}
-                    />
-                </>
-            );
-            resolve("")
-        });
-    }).then((kucTable) => {
-        return new Promise(function (resolve, reject) {
+        }
 
-            resolve("");
-        });
-    })
+        const result = await Promise.all(resultArr);
+        console.log({ result });
+        const data = (event.record[tableCode].value[0].id != null) ? result : SubTableLookUp.initialData;
+        const root = createRoot(
+            kintone.app.record.getSpaceElement(spaceCode) as HTMLElement
+        );
+        kintone.app.record.setFieldShown(tableCode, false);
+        root.render(
+            <>
+                <Label text={tableLabel} />
+                <KucTable
+                    data={data}
+                    defaultRowData={SubTableLookUp.defaultRowData}
+                    dynamicDropdown={SubTableLookUp as dynamicDropDown}
+                    message={""}
+                    isVisible={false}
+                />
+            </>
+        );
+
+    } catch
+    { }
 });
-
-
