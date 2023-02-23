@@ -75,7 +75,8 @@ export class LookUp {
                     }).filter(e => e);
                 }).flat() as dyDropDwn.LookUp[];
                 if (LookUpValue.length == 1) {
-                    this.isVisible = false;
+                    this.message = successMessage;
+                    this.isVisible = true;
                     this.RespValue.LookUpValue = LookUpValue[0];
                 }
                 else if (LookUpValue.length > 1) {
@@ -97,7 +98,8 @@ export class LookUp {
                     }
                 }
                 else {
-                    this.isVisible = false;
+                    this.message = successMessage;
+                    this.isVisible = true;
                     Object.keys(this.Settings.kucTable).forEach((property) => {
                         if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
                             (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [property]: "" };
@@ -119,7 +121,8 @@ export class LookUp {
                     }
                 }
                 else {
-                    this.isVisible = false;
+                    this.message = successMessage;
+                    this.isVisible = true;
                     this.RespValue.LookUpValue = this.CreateLookUpObj(TableValue[0]);
                 }
             }
