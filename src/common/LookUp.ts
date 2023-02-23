@@ -60,7 +60,6 @@ export class LookUp {
     }
     public GetLookUpValue(lookUpObj: any, e: any) {
         let self = this;
-        // this.RespValue.LookUpValue = null;
         let SettingLookUpObj = this.SettingLookUpObj(e);
         console.log(this.Settings.Code);
         Object.keys(SettingLookUpObj).forEach((property) => {

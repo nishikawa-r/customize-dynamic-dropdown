@@ -14,7 +14,7 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
     state: {
         isVisible: boolean,
         selectedValue: dyDropDwn.LookUp,
-        checkIndex: number
+        checkIndex: string
     };
     private vis: boolean;
     private check: boolean;
@@ -25,36 +25,35 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
         this.state = {
             isVisible: props.isVisible,
             selectedValue: {},
-            checkIndex: 0
+            checkIndex: ""
         };
         this.props = props;
         this.vis = props.isVisible;
-        this.CreateRows();
         this.check = false;
     }
 
     onClose = () => {
-        this.vis = false;
-        this.state.isVisible = false;
-        this.setState({ isVisible: this.state.isVisible })
+        this.props.selectedValue({ value: this.state.checkIndex, isVisible: false });
+        this.setState({ selectedValue: this.state.checkIndex, isVisible: false });
     }
     CreateRows = () => {
         this.rows = this.props.data;
     };
     BasicTable = () => {
+        this.CreateRows();
         console.log(this.rows);
         this.vis = this.props.isVisible;
         if (this.props.isVisible) {
             const handleChange = (event: any) => {
-                this.props.selectedValue(event.target.value);
+                this.props.selectedValue({ value: event.target.value, isVisible: true });
                 this.setState({ selectedValue: event.target.value, checkIndex: event.target.value });
             };
             return (
                 <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} size="small" aria-label="simple table">
+                    <Table sx={{ minWidth: 0 }} size="small" aria-label="simple table">
                         <TableHead>
                             <TableRow>
-                                <TableCell></TableCell>
+                                <TableCell ></TableCell>
                                 {Object.keys(this.rows[0]).map((e) => (
                                     <TableCell key={e}>{e}</TableCell>
                                 ))}
@@ -68,7 +67,7 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
                                 >
                                     <TableCell>
                                         <Radio
-                                            checked={index == this.state.checkIndex}
+                                            checked={index == parseInt(this.props.value.value)}
                                             onChange={handleChange}
                                             value={index}
                                             color="default"
@@ -90,19 +89,20 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
     Buttons = () => {
         return (
             <>
-                <Button text={"閉じる"} isVisible={this.vis} type={"normal"} onClick={() => this.onClose()} />
-                <Button text={"取得"} isVisible={this.vis} type={"submit"} onClick={() => this.onClose()} />
+                <Button text={"閉じる"} isVisible={this.props.isVisible} type={"normal"} onClick={() => this.onClose()} />
+                <Button text={"取得"} isVisible={this.props.isVisible} type={"submit"} onClick={() => this.onClose()} />
             </>
         );
     }
     render() {
+
         return (
             <Dialog
                 showCloseButton={true}
                 header="ルックアップで取得するものを選択"
                 content={this.BasicTable()}
                 footer={this.Buttons()}
-                isVisible={this.vis}
+                isVisible={this.props.isVisible}
                 onClose={this.onClose}
             />
         );
