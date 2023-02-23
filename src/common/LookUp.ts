@@ -90,7 +90,7 @@ export class LookUp {
                     for (const Look of LookUpValue) {
                         Object.keys(this.Settings.kucTable).forEach((property) => {
                             if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
-                                this.LookUpValueArr[i] = { [property]: Look[property] };
+                                this.LookUpValueArr[i] = { ...this.LookUpValueArr[i], [property]: Look[property] };
                             }
                         });
                         i++;
@@ -114,7 +114,7 @@ export class LookUp {
                     })
                     let i = 0;
                     for (const table of TableValue) {
-                        this.LookUpValueArr[i] = this.CreateLookUpObj(table);
+                        this.LookUpValueArr[i] = { ...this.LookUpValueArr[i], ...this.CreateLookUpObj(table) };
                         i++;
                     }
                 }

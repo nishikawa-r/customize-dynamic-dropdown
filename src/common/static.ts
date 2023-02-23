@@ -69,4 +69,19 @@ export const kucTable: dyDropDwn.kucTable = {
         subTitle: "",
         app: 2
     },
+    商品例: {
+        type: "text",
+        columnLabel: "商品例",
+        defaultRowData: "",
+        isLookUp: true,
+        lookUpField: "商品例",
+        lookUpTable: "",
+        lookUpkey: "商品カテゴリー",
+        doLookUpchange: "商品カテゴリー",
+        parent: "",
+        parentOptionCode: "",
+        parentOptionTable: "",
+        subTitle: "",
+        app: 2
+    },
 }
