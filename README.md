@@ -24,6 +24,11 @@
 ![image](https://user-images.githubusercontent.com/102705383/220048466-55f559e7-aaea-4bb7-85c6-34e18b6d50d3.png)
 
 
+# 値重複時のルックアップ取得について
+
+値が重複するレコード/サブテーブルが存在するとき、下記の画像のように取得元を選択することができる。
+
+![image](https://user-images.githubusercontent.com/102705383/220942401-c686977a-386e-4549-82a6-bb3511505e94.png)
 
 
 # 設定ファイル
