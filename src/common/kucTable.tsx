@@ -22,7 +22,8 @@ export default class KucTable extends React.Component<kucTable.props> {
         })[],
         message: string,
         isVisible: boolean,
-        selectedValue: string
+        selectedValue: string,
+        isDialogVisible: boolean
     };
     private SubTableLookUp: any;
     private LookUp: any;
@@ -48,7 +49,8 @@ export default class KucTable extends React.Component<kucTable.props> {
             data: datas,
             message: props.message,
             isVisible: props.isVisible,
-            selectedValue: ""
+            selectedValue: "",
+            isDialogVisible: false
         }
 
         this.defaultRowData = props.defaultRowData;
@@ -188,8 +190,9 @@ export default class KucTable extends React.Component<kucTable.props> {
             });
             this.state.message = this.LookUp.message + `:${e.fieldName}[${e.rowIndex}]`;
             this.state.isVisible = this.LookUp.isVisible;
+            this.state.isDialogVisible = (this.LookUp.LookUpValueArr.length > 0) ? true : false;
             this.setRecord(this.state.value);
-            this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible })
+            this.setState({ value: this.state.value, data: this.state.data, message: this.state.message, isVisible: this.state.isVisible, isDialogVisible: this.state.isDialogVisible })
         }
         else {
             this.state.value[rowIndex][fieldName] = data[rowIndex][fieldName];
@@ -248,7 +251,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                     <Alert text={this.state.message} isVisible={this.state.isVisible} />
                     <Button text={alertHideMessage} isVisible={this.state.isVisible} onClick={() => this.hide()} />
                 </div>
-                <LookUpDuplicateTable isVisible={true} selectedValue={this.SetSelectedValue} />
+                <LookUpDuplicateTable isVisible={this.state.isDialogVisible} selectedValue={this.SetSelectedValue} data={this.LookUp.LookUpValueArr} />
             </>
         )
     }

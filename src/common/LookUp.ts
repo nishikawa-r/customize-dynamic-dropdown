@@ -7,6 +7,7 @@ import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage } from "
 export class LookUp {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
+    public LookUpValueArr: dyDropDwn.LookUp[];
     public message = subTableErrorMessage;
     public isVisible = false;
     constructor() {
@@ -18,6 +19,7 @@ export class LookUp {
             BranchNoArr: [],
             LookUpValue: null
         }
+        this.LookUpValueArr = [];
         this.Settings = {
             requestAllCodeBody: {
                 app: 0,
@@ -85,6 +87,15 @@ export class LookUp {
                             (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [property]: "" };
                         }
                     });
+                    let i = 0;
+                    for (const Look of LookUpValue) {
+                        Object.keys(this.Settings.kucTable).forEach((property) => {
+                            if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
+                                this.LookUpValueArr[i] = { [property]: Look[property] };
+                            }
+                        });
+                        i++;
+                    }
                 }
                 else {
                     this.isVisible = false;
@@ -102,6 +113,11 @@ export class LookUp {
                     Object.keys(this.CreateLookUpObj(TableValue[0])).forEach((e) => {
                         (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [e]: "" };
                     })
+                    let i = 0;
+                    for (const table of TableValue) {
+                        this.LookUpValueArr[i] = this.CreateLookUpObj(table);
+                        i++;
+                    }
                 }
                 else {
                     this.isVisible = false;
