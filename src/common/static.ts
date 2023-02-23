@@ -5,6 +5,7 @@ export const tableLabel = '商品在庫数テーブル';
 export const spaceCode = 'LookUp_Space';
 export const recordErrorMessage = "レコードの値が重複しているためルックアップが取得できません"
 export const subTableErrorMessage = "サブテーブルの値が重複しているためルックアップが取得できません"
+export const successMessage = "参照先からデータが取得されました"
 export const duplicateError = "値が重複しているためサブタイトルが表示できません"
 export const alertHideMessage = "アラートを閉じる"
 export const kucTable: dyDropDwn.kucTable = {

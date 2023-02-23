@@ -27,11 +27,13 @@ export default class KucTable extends React.Component<kucTable.props> {
     };
     private SubTableLookUp: any;
     private LookUp: any;
+    private rowIndex: number;
     constructor(props: kucTable.props) {
         super(props);
         this.data = props.data;
         const el = this.data;
         this.LookUp = new LookUp();
+        this.rowIndex = 0;
         this.SubTableLookUp = props.dynamicDropdown;
         this.LookUp.Settings = this.SubTableLookUp.Settings;
         this.LookUp.RespValue = this.SubTableLookUp.RespValue;
@@ -190,8 +192,9 @@ export default class KucTable extends React.Component<kucTable.props> {
                     this.state.value[rowIndex][propety] = (es.data as any)[propety].value;
                 }
             });
-            this.state.message = this.LookUp.message + `:${e.fieldName}[${e.rowIndex}]`;
-            this.state.isVisible = this.LookUp.isVisible;
+            this.state.message = this.LookUp.message + `:${e.fieldName}[${e.rowIndex}]変更時`;
+            this.state.isVisible = false;
+            this.rowIndex = rowIndex;
             this.state.isDialogVisible = (this.LookUp.LookUpValueArr.length >= 1) ? true : false;
             this.state.selectedValue = { value: "", isVisible: this.state.isDialogVisible };
             this.setRecord(this.state.value);
@@ -212,6 +215,14 @@ export default class KucTable extends React.Component<kucTable.props> {
         this.state.isDialogVisible = props.isVisible;
         this.setState({ selectedValue: this.state.selectedValue, isDialogVisible: this.state.isDialogVisible });
         console.log("value", this.state.selectedValue);
+    }
+    DoLookUp = () => {
+        Object.keys(this.LookUp.LookUpValueArr[parseInt(this.state.selectedValue.value)]).map((fieldName) => {
+            this.state.value[this.rowIndex][fieldName] = this.LookUp.LookUpValueArr[parseInt(this.state.selectedValue.value)][fieldName];
+        })
+        this.setRecord(this.state.value);
+        this.setState({ value: this.state.value })
+        this.state.isVisible = true;
     }
     render() {
         this.columns = [];
@@ -252,10 +263,10 @@ export default class KucTable extends React.Component<kucTable.props> {
                     onCellChange={({ rowIndex, data, fieldName }) => this.handleCellChange({ rowIndex, data, fieldName })}
                 />
                 <div>
-                    <Alert text={this.state.message} isVisible={this.state.isVisible} />
+                    <Alert text={this.state.message} type="success" isVisible={this.state.isVisible} />
                     <Button text={alertHideMessage} isVisible={this.state.isVisible} onClick={() => this.hide()} />
                 </div>
-                <LookUpDuplicateTable isVisible={this.state.isDialogVisible} selectedValue={this.SetSelectedValue} data={this.LookUp.LookUpValueArr} value={this.state.selectedValue} />
+                <LookUpDuplicateTable isVisible={this.state.isDialogVisible} selectedValue={this.SetSelectedValue} data={this.LookUp.LookUpValueArr} value={this.state.selectedValue} DoLookUp={this.DoLookUp} />
             </>
         )
     }

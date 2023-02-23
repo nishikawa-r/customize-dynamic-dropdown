@@ -36,6 +36,11 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
         this.props.selectedValue({ value: this.state.checkIndex, isVisible: false });
         this.setState({ selectedValue: this.state.checkIndex, isVisible: false });
     }
+    onDo = () => {
+        this.props.selectedValue({ value: this.state.checkIndex, isVisible: false });
+        this.props.DoLookUp();
+        this.setState({ selectedValue: this.state.checkIndex, isVisible: false });
+    }
     CreateRows = () => {
         this.rows = this.props.data;
     };
@@ -90,7 +95,7 @@ export default class LookUpDuplicateTable extends React.Component<lookUpDuplicat
         return (
             <>
                 <Button text={"閉じる"} isVisible={this.props.isVisible} type={"normal"} onClick={() => this.onClose()} />
-                <Button text={"取得"} isVisible={this.props.isVisible} type={"submit"} onClick={() => this.onClose()} />
+                <Button text={"取得"} isVisible={this.props.isVisible} type={"submit"} onClick={() => this.onDo()} />
             </>
         );
     }

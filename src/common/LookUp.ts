@@ -3,7 +3,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
-import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage } from "@common/static"
+import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage, successMessage } from "@common/static"
 export class LookUp {
     public Settings: dyDropDwn.Settings;
     public RespValue: dyDropDwn.RespValue;
@@ -79,7 +79,7 @@ export class LookUp {
                     this.RespValue.LookUpValue = LookUpValue[0];
                 }
                 else if (LookUpValue.length > 1) {
-                    this.message = subTableErrorMessage;
+                    this.message = successMessage;
                     this.isVisible = true;
                     Object.keys(this.Settings.kucTable).forEach((property) => {
                         if (e.fieldName == this.Settings.kucTable[property].lookUpkey) {
@@ -107,7 +107,7 @@ export class LookUp {
             }
             else {
                 if (TableValue.length != 1) {
-                    this.message = recordErrorMessage;
+                    this.message = successMessage;
                     this.isVisible = true;
                     Object.keys(this.CreateLookUpObj(TableValue[0])).forEach((e) => {
                         (this.RespValue.LookUpValue as dyDropDwn.LookUp) = { [e]: "" };

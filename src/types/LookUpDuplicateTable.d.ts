@@ -5,5 +5,6 @@ export module LookUpDuplicateTable {
         selectedValue: (props: { value: string, isVisible: boolean }) => void,
         data: dyDropDwn.LookUp[];
         value: { value: string, isVisible: boolean }
+        DoLookUp: () => void
     }
 }
