@@ -64,7 +64,7 @@ export class dynamicDropdown {
                 return map;
             }
             else {
-                map.label = map.value + `(${duplicateError})`;
+                map.label = (parentObj.subTitle != "") ? map.value + `(${duplicateError})` : map.value;
                 return map;
             }
         });
@@ -104,7 +104,7 @@ export class dynamicDropdown {
                     return map;
                 }
                 else {
-                    map.label = map.value + `(${duplicateError})`;
+                    map.label = (childObj.subTitle != "") ? map.value + `(${duplicateError})` : map.value;
                     return map;
                 }
             });

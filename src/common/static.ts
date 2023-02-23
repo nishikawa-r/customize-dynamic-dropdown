@@ -36,7 +36,7 @@ export const kucTable: dyDropDwn.kucTable = {
         parent: "商品カテゴリー",
         parentOptionCode: "商品名",
         parentOptionTable: "商品テーブル",
-        subTitle: "",
+        subTitle: "メーカー",
         app: 2
     },
     商品在庫数: {
@@ -74,10 +74,10 @@ export const kucTable: dyDropDwn.kucTable = {
         columnLabel: "商品例",
         defaultRowData: "",
         isLookUp: true,
-        lookUpField: "商品例",
-        lookUpTable: "",
-        lookUpkey: "商品カテゴリー",
-        doLookUpchange: "商品カテゴリー",
+        lookUpField: "メーカー",
+        lookUpTable: "商品テーブル",
+        lookUpkey: "商品名",
+        doLookUpchange: "商品名",
         parent: "",
         parentOptionCode: "",
         parentOptionTable: "",
