@@ -193,7 +193,7 @@ export default class KucTable extends React.Component<kucTable.props> {
                 }
             });
             this.state.message = this.LookUp.message + `:${e.fieldName}[${e.rowIndex}]変更時`;
-            this.state.isVisible = (this.LookUp.LookUpValueArr.length >= 1 || data[rowIndex][fieldName] == "-----") ? false : true;
+            this.state.isVisible = (this.LookUp.LookUpValueArr.length >= 1 || data[rowIndex][fieldName] == "-----") ? false : this.LookUp.isVisible;
             this.rowIndex = rowIndex;
             this.state.isDialogVisible = (this.LookUp.LookUpValueArr.length >= 1) ? true : false;
             this.state.selectedValue = { value: "", isVisible: this.state.isDialogVisible };
