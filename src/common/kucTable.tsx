@@ -148,7 +148,8 @@ export default class KucTable extends React.Component<kucTable.props> {
 
     handleRowRemove = ({ rowIndex, data }: any) => {
         this.state.data.splice(rowIndex, 1);
-        this.setState({ value: data, data: this.state.data })
+        this.state.value = data;
+        this.setState({ value: this.state.value, data: this.state.data })
         console.log('data: ', data);
         console.log('data: ', this.state.value);
         console.log('data: ', this.state.data, rowIndex);

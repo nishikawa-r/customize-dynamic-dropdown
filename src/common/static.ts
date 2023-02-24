@@ -22,7 +22,7 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "商品カテゴリー",
         parentOptionTable: "",
         subTitle: "商品例",
-        app: 2
+        app: 824
     },
     商品名: {
         type: "dropdown",
@@ -37,7 +37,7 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "商品名",
         parentOptionTable: "商品テーブル",
         subTitle: "メーカー",
-        app: 2
+        app: 824
     },
     商品在庫数: {
         type: "dropdown",
@@ -52,7 +52,7 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "在庫数",
         parentOptionTable: "在庫数ドロップダウン用テーブル",
         subTitle: "",
-        app: 2
+        app: 824
     },
     単位: {
         type: "text",
@@ -67,7 +67,7 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "",
         parentOptionTable: "",
         subTitle: "",
-        app: 2
+        app: 824
     },
     商品例: {
         type: "text",
@@ -82,6 +82,6 @@ export const kucTable: dyDropDwn.kucTable = {
         parentOptionCode: "",
         parentOptionTable: "",
         subTitle: "",
-        app: 2
+        app: 824
     },
 }

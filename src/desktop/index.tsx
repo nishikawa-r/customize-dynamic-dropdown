@@ -10,6 +10,7 @@ import { Label } from '@kintone/kintone-ui-component';
 
 kintone.events.on(events, async (event: kintoneType.Event) => {
     try {
+        kintone.app.record.setFieldShown(tableCode, false);
         const SubTableLookUp = new dynamicDropDown();
         const DynamicDropDown = await SubTableLookUp.init();
         const SettingKuc = SubTableLookUp.Settings.kucTable;
@@ -53,7 +54,6 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
         const root = createRoot(
             kintone.app.record.getSpaceElement(spaceCode) as HTMLElement
         );
-        kintone.app.record.setFieldShown(tableCode, false);
         root.render(
             <>
                 <Label text={tableLabel} />
