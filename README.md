@@ -30,6 +30,9 @@
 
 ![image](https://user-images.githubusercontent.com/102705383/220942401-c686977a-386e-4549-82a6-bb3511505e94.png)
 
+# 実際の動作デモ
+
+![IMG_1121](https://user-images.githubusercontent.com/102705383/221390667-9d697af7-eb73-4a03-9ae1-8010ac6ba2e8.gif)
 
 # 設定ファイル
 
