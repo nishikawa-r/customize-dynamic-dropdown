@@ -5,9 +5,9 @@ import { createRoot } from 'react-dom/client';
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
 import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage, successMessage } from "@common/static"
 export class LookUp {
-    public Settings: dyDropDwn.Settings;
-    public RespValue: dyDropDwn.RespValue;
-    public LookUpValueArr: dyDropDwn.LookUp[];
+    public readonly Settings: dyDropDwn.Settings;
+    public readonly RespValue: dyDropDwn.RespValue;
+    public readonly LookUpValueArr: dyDropDwn.LookUp[];
     public message = subTableErrorMessage;
     public isVisible = false;
     constructor() {

@@ -5,12 +5,12 @@ import { api as Api } from "@type/kintone-api";
 import { kucTable, duplicateError } from "@common/static";
 import { Dropdown } from "kintone-ui-component";
 export class dynamicDropdown {
-    public Settings: dyDropDwn.Settings;
-    public RespValue: dyDropDwn.RespValue;
+    public readonly Settings: dyDropDwn.Settings;
+    public readonly RespValue: dyDropDwn.RespValue;
     public forDynamicValueAcquisition: dyDropDwn.forDynamicValueAcquisition;
     public CodeArr: ({ [key: string]: dyDropDwn.DropdownItem[] });
-    public columns: dyDropDwn.column[];
-    public initialData: ({ [key: string]: dyDropDwn.defaultData })[];
+    public readonly columns: dyDropDwn.column[];
+    public readonly initialData: ({ [key: string]: dyDropDwn.defaultData })[];
     public defaultRowData: ({ [key: string]: dyDropDwn.defaultData });
     public initialObj: ({ [key: string]: dyDropDwn.defaultData });
     constructor() {

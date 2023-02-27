@@ -7,10 +7,10 @@ import { dyDropDwn } from '@type/dynamicDropdown';
 import LookUpDuplicateTable from '@common/LookUpDuplicateTable';
 export default class KucTable extends React.Component<kucTable.props> {
     private columns: any;
-    private data: ({
+    private readonly data: ({
         [key: string]: dyDropDwn.defaultData;
     }[]);
-    private defaultRowData: ({
+    private readonly defaultRowData: ({
         [key: string]: dyDropDwn.defaultData;
     });
     state: {
@@ -25,8 +25,8 @@ export default class KucTable extends React.Component<kucTable.props> {
         selectedValue: { value: string, isVisible: boolean },
         isDialogVisible: boolean
     };
-    private SubTableLookUp: any;
-    private LookUp: any;
+    private readonly SubTableLookUp: any;
+    private readonly LookUp: any;
     private rowIndex: number;
     constructor(props: kucTable.props) {
         super(props);

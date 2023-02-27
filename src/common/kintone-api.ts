@@ -2,7 +2,7 @@ import { KintoneRestAPIClient } from '@kintone/rest-api-client';
 import { api } from '@type/kintone-api';
 
 export class kintoneApi {
-    public client: KintoneRestAPIClient;
+    public readonly client: KintoneRestAPIClient;
     constructor() {
         this.client = new KintoneRestAPIClient();
     }
