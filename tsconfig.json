@@ -3,7 +3,10 @@
     "sourceMap": true,
     "target": "ESNext",
     "module": "ESNext",
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "outDir": "dist",
     "allowJs": true,
     "esModuleInterop": true,
@@ -13,15 +16,27 @@
     "jsx": "react",
     "strict": true,
     "paths": {
-      "@common/*": ["./src/common/*"],
-      "@type/*": ["./src/types/*"]
+      "@common/*": [
+        "./src/common/*"
+      ],
+      "@type/*": [
+        "./src/types/*"
+      ]
     }
   },
-  "typeRoots": ["src/types", "node_modules/@types"],
+  "typeRoots": [
+    "src/types",
+    "node_modules/@types"
+  ],
   "files": [
     "./node_modules/@kintone/dts-gen/kintone.d.ts",
-    "./node_modules/@lb-ribbit/kintone-secrets/cybozu.d.ts"
   ],
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
