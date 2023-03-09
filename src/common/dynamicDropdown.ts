@@ -1,9 +1,7 @@
-import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintoneApi } from "@common/kintone-api";
+import { duplicateError, kucTable } from "@common/static";
+import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone } from "@type/kintone";
-import { api as Api } from "@type/kintone-api";
-import { kucTable, duplicateError } from "@common/static";
-import { Dropdown } from "kintone-ui-component";
 export class dynamicDropdown {
     public readonly Settings: dyDropDwn.Settings;
     public readonly RespValue: dyDropDwn.RespValue;

@@ -1,12 +1,11 @@
-import React from 'react';
-import { render } from 'react-dom';
-import { createRoot } from 'react-dom/client';
 import { dynamicDropdown as dynamicDropDown } from "@common/dynamicDropdown";
 import KucTable from "@common/kucTable";
+import { events, spaceCode, tableCode, tableLabel } from "@common/static";
+import { Label } from '@kintone/kintone-ui-component';
 import { dyDropDwn } from "@type/dynamicDropdown";
 import { kintone as kintoneType } from "@type/kintone";
-import { events, tableCode, tableLabel, spaceCode } from "@common/static"
-import { Label } from '@kintone/kintone-ui-component';
+import React from 'react';
+import { createRoot } from 'react-dom/client';
 
 kintone.events.on(events, async (event: kintoneType.Event) => {
     try {

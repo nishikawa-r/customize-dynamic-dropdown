@@ -1,15 +1,15 @@
-import { Dialog, Button } from '@kintone/kintone-ui-component';
-import React from 'react';
+import { Button, Dialog } from '@kintone/kintone-ui-component';
+import Paper from '@mui/material/Paper';
+import Radio from '@mui/material/Radio';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Radio from '@mui/material/Radio';
-import { LookUpDuplicateTable as lookUpDuplicateTable } from "@type/LookUpDuplicateTable";
 import { dyDropDwn } from "@type/dynamicDropdown";
+import { LookUpDuplicateTable as lookUpDuplicateTable } from "@type/LookUpDuplicateTable";
+import React from 'react';
 export default class LookUpDuplicateTable extends React.Component<lookUpDuplicateTable.props> {
     state: {
         isVisible: boolean,

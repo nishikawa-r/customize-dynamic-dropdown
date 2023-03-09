@@ -1,9 +1,6 @@
-import { dyDropDwn } from "@type/dynamicDropdown";
-import React from 'react';
-import { render } from 'react-dom';
-import { createRoot } from 'react-dom/client';
+import { subTableErrorMessage, successMessage } from "@common/static";
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
-import { tableCode, spaceCode, recordErrorMessage, subTableErrorMessage, successMessage } from "@common/static"
+import { dyDropDwn } from "@type/dynamicDropdown";
 export class LookUp {
     public readonly Settings: dyDropDwn.Settings;
     public readonly RespValue: dyDropDwn.RespValue;

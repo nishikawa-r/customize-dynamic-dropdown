@@ -1,7 +1,7 @@
+import { CellRendererProps } from "@kintone/kintone-ui-component";
 import { Record as DefaultRecord } from '@kintone/rest-api-client/lib/client/types';
 import { InSubtable } from '@kintone/rest-api-client/lib/KintoneFields/types/field';
-import { api } from "@type/kintone-api"
-import { TableColumn, CellRendererProps } from "@kintone/kintone-ui-component"
+import { api } from "@type/kintone-api";
 import React from 'react';
 export declare module dyDropDwn {
     type DropdownItem = {

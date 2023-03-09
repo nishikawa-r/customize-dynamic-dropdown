@@ -1,10 +1,10 @@
-import React from 'react';
-import { Dropdown, Alert, Button, Text, Table } from '@kintone/kintone-ui-component';
-import { kucTable } from "@type/kucTable";
 import { LookUp } from "@common/LookUp";
-import { events, tableCode, tableLabel, alertHideMessage } from "@common/static"
-import { dyDropDwn } from '@type/dynamicDropdown';
 import LookUpDuplicateTable from '@common/LookUpDuplicateTable';
+import { alertHideMessage, tableCode } from "@common/static";
+import { Alert, Button, Dropdown, Table, Text } from '@kintone/kintone-ui-component';
+import { dyDropDwn } from '@type/dynamicDropdown';
+import { kucTable } from "@type/kucTable";
+import React from 'react';
 export default class KucTable extends React.Component<kucTable.props> {
     private columns: any;
     private readonly data: ({
