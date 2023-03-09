@@ -42,7 +42,7 @@ kintone.events.on(events, async (event: kintoneType.Event) => {
                         }
                     }
                 } else {
-                    initialObj[property] = { value: recordTableRow.value[property].value || SettingKuc[property].defaultRowData }
+                    initialObj[property] = { value: recordTableRow.value[property].value ?? SettingKuc[property].defaultRowData }
                 }
             }
             resultArr.push(initialObj);

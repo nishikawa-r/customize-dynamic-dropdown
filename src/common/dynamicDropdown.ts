@@ -197,7 +197,7 @@ export class dynamicDropdown {
                 }
             });
             console.log(result);
-            resolve(result[childName] || {
+            resolve(result[childName] ?? {
                 items: [{ label: "-----", value: "-----" }],
                 value: (typeof e[property] != "undefined") ? e[property].value : "-----"
             });
