@@ -1,18 +1,13 @@
 import {
-    App as DefaultApp,
-    Record as DefaultRecord,
-    Layout as DefaultLayout,
+    App as DefaultApp, AppID, Layout as DefaultLayout, Properties, Record as DefaultRecord, Revision
 } from '@kintone/rest-api-client/lib/client/types';
-import { OneOf as DefaultFieldProperty } from '@kintone/rest-api-client/lib/KintoneFields/types/property';
 import {
-    OneOf as DefaultField,
-    Creator as DefaultCreator,
-    UserSelect as DefaultUserSelect
+    Creator as DefaultCreator, OneOf as DefaultField, UserSelect as DefaultUserSelect
 } from '@kintone/rest-api-client/lib/KintoneFields/types/field';
 import {
-    OneOf as DefaultLayoutField,
-    Label as DefaultLayoutLabel,
+    Label as DefaultLayoutLabel, OneOf as DefaultLayoutField
 } from '@kintone/rest-api-client/lib/KintoneFields/types/fieldLayout';
+import { OneOf as DefaultFieldProperty } from '@kintone/rest-api-client/lib/KintoneFields/types/property';
 
 declare namespace api {
     type App = DefaultApp;
@@ -40,6 +35,10 @@ declare namespace api {
 
     namespace response {
         type App = { readonly app?: DefaultApp; readonly fields?: FieldProperties };
+        type appField = {
+            properties: Properties,
+            revision: string;
+        }
     }
     namespace param {
         type get = {
@@ -48,6 +47,11 @@ declare namespace api {
             query: string,                  // 条件
             orderBy?: string,                    // 順番
             withCursor?: boolean              // カーソル有無
+        }
+        type getAppField = {
+            app: AppID;
+            fields: string[];
+            revision?: Revision;
         }
     }
 }
