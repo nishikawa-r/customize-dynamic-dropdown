@@ -1,17 +1,17 @@
 {
   "desktop": {
     "js": [
-      ""
+      "desktop.js"
     ]
   },
   "mobile": {
     "js": [
-      ""
+      "desktop.js"
     ]
   },
   "config": {
     "js": [
-      ""
+      "desktop.js"
     ]
   }
 }
