@@ -34,5 +34,5 @@
     }, {});
   };
 
-  fs.writeFileSync(`${root}\\plugin\\manifest.json`, JSON.stringify(merged(base, env)));
+  fs.writeFileSync(`${root}/plugin/manifest.json`, JSON.stringify(merged(base, env)));
 })(process.argv);
